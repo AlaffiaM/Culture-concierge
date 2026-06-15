@@ -6,3 +6,4 @@ const CERTS_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken
 let cachedKeys = null
 let cacheExpiry = 0
 
+async function getPublicKeys() {
