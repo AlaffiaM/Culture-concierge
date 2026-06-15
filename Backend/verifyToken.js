@@ -15,3 +15,4 @@ async function getPublicKeys() {
     cacheExpiry = Date.now() + 6 * 60 * 60 * 1000
     return cachedKeys
   } catch (err) {
+    // If we have stale keys, use them as fallback
