@@ -12,4 +12,5 @@ async function getPublicKeys() {
     const res = await require('axios').get(CERTS_URL, { timeout: 10000 })
     cachedKeys = res.data
     console.log('[verifyToken] Fetched', Object.keys(cachedKeys).length, 'public keys from Google')
+    cacheExpiry = Date.now() + 6 * 60 * 60 * 1000
     return cachedKeys
