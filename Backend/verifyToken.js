@@ -14,3 +14,4 @@ async function getPublicKeys() {
     console.log('[verifyToken] Fetched', Object.keys(cachedKeys).length, 'public keys from Google')
     cacheExpiry = Date.now() + 6 * 60 * 60 * 1000
     return cachedKeys
+  } catch (err) {
