@@ -7,3 +7,4 @@ let cachedKeys = null
 let cacheExpiry = 0
 
 async function getPublicKeys() {
+  if (cachedKeys && Date.now() < cacheExpiry) return cachedKeys
