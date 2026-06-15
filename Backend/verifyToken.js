@@ -8,4 +8,5 @@ let cacheExpiry = 0
 
 async function getPublicKeys() {
   if (cachedKeys && Date.now() < cacheExpiry) return cachedKeys
+  try {
     const res = await require('axios').get(CERTS_URL, { timeout: 10000 })
