@@ -4,7 +4,7 @@
 - **Frontend:** React 19 + Vite 8 (SPA) — Vercel
 - **Backend:** Express 5 + MongoDB Atlas — Render/Railway
 - **Auth:** Firebase Google OAuth
-- **AI:** OpenRouter → Gemini free-tier fallback
+- **AI:** OpenRouter → Gemini free-tier fallback 
 - **Images:** Cloudinary (free tier)
 - **Tracking:** Google Analytics + Hotjar
 
