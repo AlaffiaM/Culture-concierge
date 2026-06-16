@@ -36,8 +36,8 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection failed:", err.message));
 
-// SPA catch-all — serve frontend for non-API GET requests
-app.get("*", (req, res, next) => {
+// SPA catch-all — serve frontend for non-API requests
+app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) return next()
   res.sendFile(path.join(distPath, "index.html"))
 })
