@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -6,6 +7,10 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve built frontend in production
+const distPath = path.join(__dirname, "..", "alaffia-concierge", "dist")
+app.use(express.static(distPath))
 
 // Mount route modules
 const spotsRoute = require("./routes/spots");
@@ -31,10 +36,13 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection failed:", err.message));
 
-// Health check
-app.get("/", (req, res) => res.send("Alaffia API running"));
+// SPA catch-all — serve frontend for non-API GET requests
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api/")) return next()
+  res.sendFile(path.join(distPath, "index.html"))
+})
 
-// 404 catch-all — must be registered last
+// 404 catch-all — API routes only from here
 app.use((req, res) => {
   res.status(404).json({
     success: false,
