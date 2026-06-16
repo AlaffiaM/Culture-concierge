@@ -88,7 +88,7 @@ router.get('/upcoming/:city', async (req, res) => {
 router.post('/find-images', requireAdmin, async (req, res) => {
   try {
     const { spotIds } = req.body
-    const { findImagesForSpots } = require('../utils/outscraperImageFinder')
+    const { findImagesForSpots } = require('../utils/imageFinder')
 
     let spots
     if (spotIds && Array.isArray(spotIds) && spotIds.length > 0) {

@@ -18,7 +18,7 @@ async function callGemini(prompt, retries = 2) {
         `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
         {
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 8192 },
+          generationConfig: { temperature: 0.3, maxOutputTokens: 16384 },
         }
       )
       const text = data.candidates[0]?.content?.parts?.[0]?.text
@@ -65,7 +65,6 @@ For each venue, return a JSON object with these fields:
 - "address": the full street address
 - "vibeTags": an array of 2-4 relevant tags like "Art", "Music", "History", "Food", "Wellness", "Nature", "Adventure", "Social", "Relaxation", "Culture", "Family", "Nightlife"
 - "coordinates": { "lat": number, "lng": number }
-- "imageUrl": a publicly available photo of the venue (a real, working image URL from Wikimedia Commons, Google Images, or Wikipedia if possible)
 
 Focus on venues interesting for cultural tourists: museums, art galleries, parks, gardens, theatres, cultural centres, markets, stadiums, monuments, historical sites, landmarks, beaches, nature reserves, wildlife parks, botanic gardens, wellness centres, spas, hotels, resorts, restaurants.
 
@@ -79,8 +78,7 @@ Return ONLY a valid JSON array of objects, no other text. Example:
     "tip": "A practical tip.",
     "address": "123 Street, City",
     "vibeTags": ["Art", "History"],
-    "coordinates": { "lat": -1.28, "lng": 36.82 },
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/example.jpg"
+    "coordinates": { "lat": -1.28, "lng": 36.82 }
   }
 ]`
 

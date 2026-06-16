@@ -73,33 +73,4 @@ router.post('/tags', async (req, res) => {
   res.json({ message: 'Structured tag management coming in Phase 2' })
 })
 
-// GET /api/admin/outscraper-status — check Outscraper API key configuration
-router.get('/outscraper-status', (req, res) => {
-  const { getApiKey } = require('../utils/outscraperImageFinder')
-  const key = getApiKey()
-  res.json({
-    configured: !!key,
-    keyPreview: key ? key.slice(0, 8) + '...' : null,
-  })
-})
-
-// POST /api/admin/outscraper-key — update Outscraper API key
-router.post('/outscraper-key', (req, res) => {
-  const { apiKey } = req.body
-  if (!apiKey || typeof apiKey !== 'string') {
-    return res.status(400).json({ message: 'apiKey string is required' })
-  }
-
-  const fs = require('fs')
-  const path = require('path')
-  const configDir = path.join(__dirname, '..', 'config')
-  const configPath = path.join(configDir, 'outscraper.json')
-
-  if (!fs.existsSync(configDir)) fs.mkdirSync(configDir, { recursive: true })
-  fs.writeFileSync(configPath, JSON.stringify({ apiKey }, null, 2))
-  process.env.OUTSCRAPER_API_KEY = apiKey
-
-  res.json({ message: 'API key updated', keyPreview: apiKey.slice(0, 8) + '...' })
-})
-
 module.exports = router
