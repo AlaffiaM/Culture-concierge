@@ -118,22 +118,33 @@ export default function AdminScraper() {
     return { status: 'healthy', label: 'All sources operational', color: '#8A9A5B' }
   }
 
-  function handleAccept(idsOverride) {
-    const ids = idsOverride || Array.from(selectedIds)
-    if (ids.length === 0) return
-    setAccepting(true)
-    adminFetch('/api/scraper/accept', {
-      method: 'POST',
-      body: JSON.stringify({ eventIds: ids }),
-    })
-      .then(() => {
-        const updateList = list =>
-          list.map(e => (ids.includes(e._id) ? { ...e, status: 'draft' } : e))
-        if (results?.events) {
-          setResults(prev => ({ ...prev, events: updateList(prev.events) }))
-        }
-        if (existingEvents) {
-          setExistingEvents(prev => updateList(prev))
+  async function handleRun(source) {
+    const sources = source ? [source] : SOURCES
+
+    for (const src of sources) {
+      const s = getStatus(src)
+      if (s.state === 'running') continue
+
+      setStatus(src, { state: 'running', count: 0 })
+      addLog(src, 'Fetching events...', 'start')
+
+      try {
+        const res = await adminFetch('/api/scraper/run', {
+          method: 'POST',
+          body: JSON.stringify({ source: src }),
+        })
+
+        const r = res.results?.[src]
+        const newCount = r?.new || 0
+        const skipped = r?.skipped || 0
+        const rejected = r?.rejected || 0
+
+        if (r?.error) {
+          setStatus(src, { state: 'error', count: 0, error: r.error })
+          addLog(src, r.error, 'error')
+        } else {
+          setStatus(src, { state: 'done', count: newCount, fetched: r.fetched, skipped, rejected })
+          addLog(src, `${newCount} new, ${skipped} skipped${rejected ? `, ${rejected} rejected` : ''}`, 'success')
         }
         setSelectedIds(new Set())
       })
