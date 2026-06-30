@@ -38,9 +38,6 @@ export default function AdminOverview({ onNavigate }) {
 
   const statEntries = [
     { key: 'totalEvents', label: 'Total Events' },
-    { key: 'draftEvents', label: 'Pending Review' },
-    { key: 'approvedEvents', label: 'Approved' },
-    { key: 'archivedEvents', label: 'Archived' },
     { key: 'totalSpots', label: 'Total Spots' },
     { key: 'ghostEvents', label: 'Ghost Events' },
     { key: 'eventsThisWeek', label: 'Events This Week' },
