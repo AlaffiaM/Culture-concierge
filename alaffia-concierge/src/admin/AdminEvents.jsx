@@ -116,8 +116,54 @@ export default function AdminEvents() {
 
   function formatDate(d) {
     if (!d) return '—'
-    const date = new Date(d)
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  }
+
+  function formatPrice(p) {
+    if (!p || p === '—' || p === '') return null
+    if (p.toLowerCase() === 'free' || p === '0' || p === '0.00') return 'Free'
+    if (/^[\d,.]+$/.test(p)) return `₦${p}`
+    return p
+  }
+
+  const hasPrice = events.some(e => e.price && e.price !== '—' && e.price !== '')
+
+  function PillarBadge({ pillar }) {
+    if (!pillar) return <span style={{ color: 'var(--admin-text-muted)', fontSize: 12 }}>—</span>
+    const s = PILLAR_STYLE[pillar] || { bg: 'rgba(255,255,255,0.06)', color: '#888' }
+    return <span className="pillar-badge" style={{ background: s.bg, color: s.color }}>{pillar}</span>
+  }
+
+  function VibePill({ vibe }) {
+    if (!vibe) return <span style={{ color: 'var(--admin-text-muted)', fontSize: 12 }}>—</span>
+    const s = vibeStyle(vibe)
+    return <span className="vibe-pill" style={{ background: s.bg, color: s.color }}>{vibe}</span>
+  }
+
+  function Pagination() {
+    if (totalPages <= 1) return null
+    const from = (page - 1) * PAGE_SIZE + 1
+    const to = Math.min(page * PAGE_SIZE, total)
+    const pages = []
+    const maxVisible = 5
+    let start = Math.max(1, page - Math.floor(maxVisible / 2))
+    let end = Math.min(totalPages, start + maxVisible - 1)
+    if (end - start + 1 < maxVisible) start = Math.max(1, end - maxVisible + 1)
+
+    for (let i = start; i <= end; i++) pages.push(i)
+
+    return (
+      <div className="pagination-bar">
+        <span className="pagination-info">Showing {from}–{to} of {total}</span>
+        <div className="pagination-controls">
+          <button className="pagination-btn" disabled={page <= 1} onClick={() => goToPage(page - 1)}>‹</button>
+          {start > 1 && <><button className="pagination-btn" onClick={() => goToPage(1)}>1</button><span className="pagination-ellipsis">…</span></>}
+          {pages.map(p => <button key={p} className={`pagination-btn ${p === page ? 'pagination-active' : ''}`} onClick={() => goToPage(p)}>{p}</button>)}
+          {end < totalPages && <><span className="pagination-ellipsis">…</span><button className="pagination-btn" onClick={() => goToPage(totalPages)}>{totalPages}</button></>}
+          <button className="pagination-btn" disabled={page >= totalPages} onClick={() => goToPage(page + 1)}>›</button>
+        </div>
+      </div>
+    )
   }
 
   if (showEditor) {
