@@ -228,13 +228,12 @@ export default function AdminOverview({ onNavigate }) {
               ))}
             </div>
           </div>
-          <div className="admin-activity-feed">
-            {recentEvents.map(ev => (
-              <div key={ev._id} className="admin-activity-item">
-                <div className={`admin-activity-dot ${ev.status === 'approved' ? 'sage' : 'copper'}`} />
-                <span style={{ fontWeight: 500 }}>{ev.name}</span>
-                <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>{ev.city}</span>
-                <span>{formatDate(ev.date)}</span>
+
+          {/* Pillar Breakdown */}
+          {stats.pillarBreakdown?.length > 0 && (
+            <div>
+              <div className="admin-section-header">
+                <h3 className="admin-section-title">Content Balance</h3>
               </div>
             ))}
           </div>
