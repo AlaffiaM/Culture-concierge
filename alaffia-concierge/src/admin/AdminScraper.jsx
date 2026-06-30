@@ -101,8 +101,8 @@ export default function AdminScraper() {
     setSourceStatus(prev => ({ ...prev, [src]: status }))
   }
 
-  function toggleSelect(id) {
-    setSelectedIds(prev => {
+  function toggleError(id) {
+    setExpandedErrors(prev => {
       const next = new Set(prev)
       next.has(id) ? next.delete(id) : next.add(id)
       return next
