@@ -266,7 +266,7 @@ export default function AdminEvents() {
                     >
                       {venueExpanded.has(event._id) ? event.venue : (event.venue || '—')}
                     </td>
-                    <td style={{ fontSize: 12 }}>{event.price || '—'}</td>
+                    {hasPrice && <td style={{ fontSize: 12 }}>{formatPrice(event.price) || '—'}</td>}
                     <td>{event.city}</td>
                     <td>{formatDate(event.date)}</td>
                     <td>
