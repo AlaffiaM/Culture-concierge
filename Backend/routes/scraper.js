@@ -27,26 +27,7 @@ router.post('/run', async (req, res) => {
   }
 })
 
-// POST /api/scraper/accept — accept scraped events into draft review queue
-router.post('/accept', async (req, res) => {
-  try {
-    const { eventIds } = req.body
-    if (!eventIds || !Array.isArray(eventIds) || eventIds.length === 0) {
-      return res.status(400).json({ message: 'eventIds array is required' })
-    }
-
-    const result = await Event.updateMany(
-      { _id: { $in: eventIds } },
-      { $set: { status: 'draft' } }
-    )
-
-    res.json({ modified: result.modifiedCount })
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-// GET /api/scraper/history — recent scraped events
+// GET /api/scraper/history — recent imported events
 router.get('/history', async (req, res) => {
   try {
     const { source, limit = 50 } = req.query
