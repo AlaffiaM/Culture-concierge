@@ -459,7 +459,59 @@ export default function AdminScraper() {
                           )}
                         </div>
                       )}
-                    </td>
+                    </div>
+                  </div>
+                )
+              })
+            )}
+          </div>
+        )}
+
+        {/* Footer: Dev Mode toggle + clear */}
+        <div className="sf-footer">
+          <label className="sf-dev-toggle">
+            <input
+              type="checkbox"
+              checked={devMode}
+              onChange={() => setDevMode(!devMode)}
+            />
+            Developer Mode
+          </label>
+          {logs.length > 0 && (
+            <button
+              className="sf-clear-btn"
+              onClick={() => { setLogs([]); setExpandedErrors(new Set()) }}
+            >
+              Clear
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Results Table */}
+      {results?.events?.length > 0 && (
+        <div style={{ marginBottom: 28 }}>
+          <div className="admin-toolbar" style={{ marginBottom: 8 }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--admin-text)' }}>
+              Imported Events ({results.events.length})
+            </span>
+          </div>
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th style={{ width: 50 }}>Image</th>
+                  <th>Name</th>
+                  <th>Venue</th>
+                  <th>Price</th>
+                  <th>City</th>
+                  <th>Date</th>
+                  <th>Pillar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.events.map(ev => (
+                  <tr key={ev._id}>
                     <td>
                       {ev.imageUrl ? (
                         <a href={ev.imageUrl} target="_blank" rel="noopener noreferrer">
