@@ -321,6 +321,13 @@ export default function AdminSettings({ user }) {
               {clearing ? 'Clearing...' : 'Clear Scraped Events'}
             </button>
           </div>
+          {clearResult && (
+            <div style={{ marginTop: 10, fontSize: 13, color: clearResult.ok ? '#8A9A5B' : '#dc3232' }}>
+              {clearResult.ok
+                ? `✓ Deleted ${clearResult.deleted} scraped event(s)`
+                : `✗ ${clearResult.message}`}
+            </div>
+          )}
         </div>
       </div>
 
