@@ -59,7 +59,7 @@ const PAGE_TITLES = {
 const PAGE_SUBTITLES = {
   overview: 'Overview of your content and activity',
   events: 'Manage events across all cities',
-  ghosts: 'Pop-up events without a permanent venue',
+  ghosts: 'Pop-up and draft events awaiting approval',
   spots: 'Manage spots and venues',
   tags: 'Tag taxonomy and keyword system',
   settings: 'Admin access and environment info',
