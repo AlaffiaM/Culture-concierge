@@ -530,87 +530,9 @@ export default function AdminScraper() {
                       <span className="admin-status-badge admin-status-approved">{ev.pillar || '—'}</span>
                     </td>
                   </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <div style={{ marginBottom: 28 }}>
-        <div className="admin-quick-actions">
-          <button
-            className={`admin-quick-action${running ? ' loading' : ''}`}
-            onClick={() => handleRun(null)}
-            disabled={running}
-          >
-            <div className="admin-quick-action-icon copper">
-              {running ? <div className="admin-spinner" /> : '⚡'}
-            </div>
-            <div className="admin-quick-action-body">
-              <h4>{running ? 'Running...' : 'Run All Scrapers'}</h4>
-              <p>Import events from all sources</p>
-            </div>
-          </button>
-
-          {SOURCES.map(src => {
-            const disabled = running || !!SOURCE_NOTES[src]
-            return (
-              <button
-                key={src}
-                className={`admin-quick-action${running ? ' loading' : ''}`}
-                onClick={() => handleRun(src)}
-                disabled={disabled}
-                title={SOURCE_NOTES[src] || `Import from ${SOURCE_LABELS[src]}`}
-                style={{ opacity: disabled ? 0.35 : 1 }}
-              >
-                <div className="admin-quick-action-icon sage">
-                  {running ? <div className="admin-spinner" /> : SOURCE_NOTES[src] ? '⏸' : '→'}
-                </div>
-                <div className="admin-quick-action-body">
-                  <h4>{SOURCE_LABELS[src]}</h4>
-                  <p>{SOURCE_NOTES[src] || `Import from ${SOURCE_LABELS[src]}`}</p>
-                </div>
-              </button>
-            )
-          })}
-        </div>
-
-        <button
-          className="admin-btn admin-btn-secondary"
-          onClick={loadHistory}
-          style={{ marginTop: 4 }}
-        >
-          {showHistory ? 'Refresh' : 'View Recent Imports'}
-        </button>
-      </div>
-
-      {results && (
-        <div>
-          <div className="admin-stats-grid" style={{ marginBottom: 16 }}>
-            {SOURCES.map(src => {
-              const r = results.results?.[src]
-              if (!r) return null
-              return (
-                <div key={src} className="admin-stat-card">
-                  <div className="admin-stat-header">
-                    <div className={`admin-stat-icon ${r.error ? 'white' : 'copper'}`}>
-                      {r.error ? '⚠️' : '✓'}
-                    </div>
-                  </div>
-                  <div className="admin-stat-number">{r.new || 0}</div>
-                  <div className="admin-stat-label">
-                    {SOURCE_LABELS[src]} — {r.fetched || 0} found, {r.skipped || 0} skipped
-                    {r.error && <span style={{ display: 'block', fontSize: 10, color: '#e55555' }}>{r.error}</span>}
-                    {SOURCE_NOTES[src] && <span style={{ display: 'block', fontSize: 10, color: '#888' }}>{SOURCE_NOTES[src]}</span>}
-                  </div>
-                </div>
-              )
-            })}
+                ))}
+              </tbody>
+            </table>
           </div>
 
           {results.events?.length > 0 && renderTable(results.events, 'Newly imported events')}
