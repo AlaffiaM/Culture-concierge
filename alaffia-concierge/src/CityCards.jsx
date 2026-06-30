@@ -13,7 +13,9 @@ const cityImages = {
 };
 
 export default function CityCards({ allSpots, onSelectCity }) {
-  if (allSpots.length === 0) {
+  const spots = Array.isArray(allSpots) ? allSpots : [];
+
+  if (spots.length === 0) {
     return (
       <div className="city-grid">
         {[1, 2, 3, 4].map((i) => (
@@ -32,7 +34,7 @@ export default function CityCards({ allSpots, onSelectCity }) {
   return (
     <div className="city-grid">
       {cities.map((city) => {
-        const count = allSpots.filter((s) => s.city === city.name).length;
+        const count = spots.filter((s) => s.city === city.name).length;
         return (
           <div
             key={city.name}
