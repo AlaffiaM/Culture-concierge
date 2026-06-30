@@ -5,12 +5,29 @@ const { requireAdmin } = require('../middleware/admin')
 
 const SPOT_SCRAPER_SOURCES = ['gemini']
 
-// GET /api/spots — return active spots (public)
+// GET /api/spots — return spots with pagination (public)
 router.get('/', async (req, res) => {
   try {
     const filter = req.query.all === 'true' ? {} : { status: { $in: ['active', 'inactive'] } }
-    const spots = await Spot.find(filter).lean().select('name city type pillar vibeTags tags description tip address images coordinates source status')
-    res.json(spots)
+    if (req.query.city) {
+      filter.city = { $regex: req.query.city, $options: 'i' }
+    }
+
+    const page = Math.max(parseInt(req.query.page) || 1, 1)
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 50, 1), 200)
+    const skip = (page - 1) * limit
+
+    const [spots, total] = await Promise.all([
+      Spot.find(filter)
+        .lean()
+        .select('name city type pillar vibeTags tags description tip address images coordinates source status updatedAt createdAt')
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Spot.countDocuments(filter),
+    ])
+
+    res.json({ spots, total, page, totalPages: Math.ceil(total / limit) || 1 })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -22,7 +39,7 @@ router.get('/:city', async (req, res) => {
     const spots = await Spot.find({
       city: { $regex: req.params.city, $options: 'i' },
       status: { $in: ['active', 'inactive'] },
-    }).lean().select('name city type pillar vibeTags tags description tip address images coordinates source status')
+    }).lean().select('name city type pillar vibeTags tags description tip address images coordinates source status updatedAt')
     res.json(spots)
   } catch (err) {
     res.status(500).json({ message: err.message })
