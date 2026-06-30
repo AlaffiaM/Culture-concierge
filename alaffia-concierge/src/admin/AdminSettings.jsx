@@ -167,8 +167,28 @@ export default function AdminSettings({ user }) {
               <span className="health-value">{health?.spotCount ?? '—'}</span>
             </div>
           </div>
-          <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
-            {import.meta.env.VITE_API_URL || '(dev proxy)'}
+        </div>
+      </div>
+
+      {/* API Configuration */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">API Configuration</h3>
+        <div className="settings-grid">
+          <div className="health-card">
+            <div className="health-card-row">
+              <span className="health-label">API Endpoint</span>
+              <span className="health-value" style={{ fontFamily: 'monospace', fontSize: 12 }}>{API_BASE}</span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Firebase</span>
+              <span className="health-value" style={{ color: HEALTHY_COLOR }}>
+                ● Configured
+              </span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Node Version</span>
+              <span className="health-value" style={{ fontFamily: 'monospace', fontSize: 12 }}>{health?.nodeVersion || '—'}</span>
+            </div>
           </div>
         </div>
 
