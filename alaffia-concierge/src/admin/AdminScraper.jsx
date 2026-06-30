@@ -82,23 +82,9 @@ export default function AdminScraper() {
   const [expandedErrors, setExpandedErrors] = useState(new Set())
   const logEndRef = useRef(null)
 
-  async function handleRun(source) {
-    setRunning(true)
-    setResults(null)
-    setSelectedIds(new Set())
-    setExistingEvents(null)
-    try {
-      const body = source ? { source } : {}
-      const res = await adminFetch('/api/scraper/run', {
-        method: 'POST',
-        body: JSON.stringify(body),
-      })
-      setResults(res)
-      if (res.events?.length === 0) loadExistingScraped()
-    } catch (err) {
-      console.error('[AdminScraper] Run failed:', err.message)
-    } finally {
-      setRunning(false)
+  useEffect(() => {
+    if (logEndRef.current) {
+      logEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
