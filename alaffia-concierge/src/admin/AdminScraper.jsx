@@ -527,24 +527,7 @@ export default function AdminScraper() {
                     <td>{ev.city}</td>
                     <td>{formatDate(ev.date)}</td>
                     <td>
-                      <span className="admin-status-badge admin-status-draft">
-                        {ev.pillar || '—'}
-                      </span>
-                    </td>
-                    <td>
-                      {canAccept ? (
-                        <button
-                          className="admin-btn-sm admin-btn-approve"
-                          onClick={() => handleAccept([ev._id])}
-                          disabled={accepting}
-                        >
-                          Accept
-                        </button>
-                      ) : (
-                        <span className={`admin-status-badge ${ev.status === 'draft' ? 'admin-status-draft' : 'admin-status-approved'}`}>
-                          {ev.status}
-                        </span>
-                      )}
+                      <span className="admin-status-badge admin-status-approved">{ev.pillar || '—'}</span>
                     </td>
                   </tr>
                 )
