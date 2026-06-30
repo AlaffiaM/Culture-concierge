@@ -274,8 +274,6 @@ export default function AdminEvents() {
                     <td style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
                       {event.linkedSpotId?.name || (event.isGhostLocation ? 'Pop-up' : '—')}
                     </td>
-                    <td>{event.vibe || '—'}</td>
-                    <td>{event.linkedSpotId?.name || (event.isGhostLocation ? 'Pop-up' : '—')}</td>
                     <td>
                       <div className="actions">
                         {event.status === 'draft' && (
