@@ -225,7 +225,7 @@ export default function AdminEvents() {
                   {hasPrice && <th>Price</th>}
                   <th>City</th>
                   <th>Date</th>
-                  <th>Status</th>
+                  <th>Pillar</th>
                   <th>Vibe</th>
                   <th>Linked To</th>
                   <th>Actions</th>
