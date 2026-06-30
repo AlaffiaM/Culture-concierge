@@ -106,20 +106,6 @@ export default function AdminGhostEvents() {
         <p className="admin-empty">No ghost events found.</p>
       ) : (
         <>
-          {selectedIds.size > 0 && (
-            <div className="admin-toolbar" style={{ marginBottom: 8 }}>
-              <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
-                {selectedIds.size} selected
-              </span>
-              <button className="admin-btn-sm admin-btn-approve" onClick={bulkApprove}>
-                Approve All
-              </button>
-              <button className="admin-btn-sm admin-btn-archive" onClick={bulkArchive}>
-                Archive All
-              </button>
-            </div>
-          )}
-
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
