@@ -93,17 +93,12 @@ export default function AdminScraper() {
     setLogs(prev => [...prev, { time, source, message: sanitize(message), type }])
   }
 
-  async function loadExistingScraped() {
-    setLoadingExisting(true)
-    try {
-      const data = await adminFetch('/api/events/scraped')
-      setExistingEvents(data)
-      setSelectedIds(new Set())
-    } catch (err) {
-      console.error('[AdminScraper] Load existing failed:', err.message)
-    } finally {
-      setLoadingExisting(false)
-    }
+  function getStatus(src) {
+    return sourceStatus[src] || { state: 'idle', count: 0 }
+  }
+
+  function setStatus(src, status) {
+    setSourceStatus(prev => ({ ...prev, [src]: status }))
   }
 
   function toggleSelect(id) {
