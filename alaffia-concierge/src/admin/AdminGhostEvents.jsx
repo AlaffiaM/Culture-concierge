@@ -201,12 +201,6 @@ export default function AdminGhostEvents() {
                 </span>
               </div>
               <div className="actions" style={{ gap: 6 }}>
-                {detailEvent.status === 'draft' && (
-                  <button className="admin-btn-sm admin-btn-approve" onClick={() => handleApprove(detailEvent._id)}>Approve</button>
-                )}
-                {detailEvent.status !== 'archived' && (
-                  <button className="admin-btn-sm admin-btn-archive" onClick={() => handleArchive(detailEvent._id)}>Archive</button>
-                )}
                 <button className="admin-btn-sm admin-btn-edit" onClick={() => handleEdit(detailEvent)}>Edit</button>
                 <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(detailEvent._id)}>Delete</button>
               </div>
