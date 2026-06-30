@@ -67,6 +67,9 @@ export default function AdminSpots() {
           )
         }
         setSpots(filtered)
+        setTotal(data.total || 0)
+        setTotalPages(data.totalPages || 1)
+        setSelectedIds(new Set())
       })
       .catch(err => console.error('[AdminSpots]', err.message))
   }
