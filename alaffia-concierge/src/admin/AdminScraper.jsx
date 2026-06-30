@@ -173,8 +173,14 @@ export default function AdminScraper() {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   }
 
-  function renderTable(items, title) {
-    const pendingCount = items.filter(e => e.status === 'scraped').length
+  const anyRunning = SOURCES.some(s => getStatus(s).state === 'running')
+  const health = systemHealth()
+  const totalNew = results ? Object.values(results.results || {}).reduce((sum, r) => sum + (r.new || 0), 0) : 0
+  const totalFetched = results ? Object.values(results.results || {}).reduce((sum, r) => sum + (r.fetched || 0), 0) : 0
+  const totalRejected = results ? Object.values(results.results || {}).reduce((sum, r) => sum + (r.rejected || 0), 0) : 0
+
+  function StatusDot({ state }) {
+    const colors = { idle: '#444', running: '#f0b429', done: '#8A9A5B', error: '#dc3232' }
     return (
       <div style={{ marginBottom: 28 }}>
         <div className="admin-toolbar" style={{ marginBottom: 8 }}>
