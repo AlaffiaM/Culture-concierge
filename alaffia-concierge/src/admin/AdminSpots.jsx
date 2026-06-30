@@ -49,7 +49,10 @@ export default function AdminSpots() {
   const [findResult, setFindResult] = useState(null)
 
   function loadSpots() {
-    adminFetch('/api/spots?all=true')
+    const params = new URLSearchParams({ all: 'true', page, limit: PAGE_SIZE })
+    if (filterCity !== 'All') params.set('city', filterCity)
+
+    adminFetch(`/api/spots?${params}`)
       .then(data => {
         let filtered = data
         if (filterCity !== 'All') {
