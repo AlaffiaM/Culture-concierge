@@ -125,12 +125,10 @@ export default function AdminSettings({ user }) {
         <div className="admin-stat-card">
           <div className="admin-stat-header">
             <div className="admin-stat-icon sage">🔑</div>
-          </div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
-            Admin
-          </div>
-          <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
-            Full access to all content
+            <div>
+              <div className="admin-stat-number" style={{ fontSize: 18 }}>Admin</div>
+              <div className="admin-stat-label">Full access to all content</div>
+            </div>
           </div>
         </div>
 
