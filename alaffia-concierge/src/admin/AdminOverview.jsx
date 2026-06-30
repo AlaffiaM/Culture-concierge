@@ -127,13 +127,12 @@ export default function AdminOverview({ onNavigate }) {
             <h4>Add New Event</h4>
             <p>Create a new event listing</p>
           </div>
-          <div className="admin-city-list">
-            {stats.eventsByCity.map(c => (
-              <div key={c.city} className="admin-city-row">
-                <span>{c.city}</span>
-                <span>{c.count}</span>
-              </div>
-            ))}
+        </button>
+        <button className="admin-quick-action" onClick={() => onNavigate('scraper')}>
+          <div className="admin-quick-action-icon sage">⚡</div>
+          <div className="admin-quick-action-body">
+            <h4>Run Scraper</h4>
+            <p>Import events from external sources</p>
           </div>
         </div>
       )}
