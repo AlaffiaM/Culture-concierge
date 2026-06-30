@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { adminFetch } from './adminApi'
 import EventEditor from './EventEditor'
 
-const STATUSES = ['all', 'scraped', 'draft', 'approved', 'archived']
+const STATUSES = ['all', 'approved']
 const CITIES = ['All', 'Lagos', 'Abuja', 'Kigali', 'Nairobi']
 
 export default function AdminGhostEvents() {
