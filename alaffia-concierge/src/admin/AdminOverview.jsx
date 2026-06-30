@@ -235,8 +235,30 @@ export default function AdminOverview({ onNavigate }) {
               <div className="admin-section-header">
                 <h3 className="admin-section-title">Content Balance</h3>
               </div>
-            ))}
-          </div>
+              <div className="pillar-breakdown-card">
+                {stats.pillarBreakdown.map(p => {
+                  const s = PILLAR_STYLES[p.pillar] || { bg: 'rgba(255,255,255,0.06)', text: '#888', label: p.pillar }
+                  const total = stats.pillarBreakdown.reduce((sum, x) => sum + x.count, 0)
+                  const pct = Math.round((p.count / total) * 100)
+                  return (
+                    <div key={p.pillar} className="pillar-row clickable" onClick={() => onNavigate('events')}>
+                      <div className="pillar-row-header">
+                        <span className="pillar-row-label" style={{ color: s.text }}>{s.label}</span>
+                        <span className="pillar-row-count">{p.count}</span>
+                        <span className="pillar-row-pct">{pct}%</span>
+                      </div>
+                      <div className="pillar-track">
+                        <div className="pillar-fill" style={{ width: `${pct}%`, background: s.text }} />
+                      </div>
+                    </div>
+                  )
+                })}
+                <div className="pillar-total">
+                  {stats.pillarBreakdown.reduce((sum, p) => sum + p.count, 0)} total events & spots
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
