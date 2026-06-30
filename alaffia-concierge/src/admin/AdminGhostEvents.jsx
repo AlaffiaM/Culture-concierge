@@ -156,11 +156,6 @@ export default function AdminGhostEvents() {
                     <td style={{ fontSize: 12 }}>{event.price || '—'}</td>
                     <td>{event.city}</td>
                     <td>{formatDate(event.date)}</td>
-                    <td>
-                      <span className={`admin-status-badge admin-status-${event.status}`}>
-                        {event.status}
-                      </span>
-                    </td>
                     <td>{event.vibe || '—'}</td>
                     <td>{event.linkedSpotId?.name || 'Pop-up'}</td>
                     <td onClick={e => e.stopPropagation()}>
