@@ -29,8 +29,8 @@ export default function AdminOverview({ onNavigate }) {
       .then(setStats)
       .catch(err => console.error('[AdminOverview] Stats:', err.message))
 
-    adminFetch('/api/events?limit=5')
-      .then(data => setRecentEvents(Array.isArray(data) ? data.slice(0, 5) : []))
+    adminFetch('/api/events?limit=20')
+      .then(data => setRecentEvents(data.events || []))
       .catch(() => {})
   }, [])
 
