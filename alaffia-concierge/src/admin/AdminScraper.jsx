@@ -79,11 +79,8 @@ export default function AdminScraper() {
   const [lastRefresh, setLastRefresh] = useState(null)
   const [history, setHistory] = useState(null)
   const [showHistory, setShowHistory] = useState(false)
-  const [venueExpanded, setVenueExpanded] = useState(new Set())
-  const [existingEvents, setExistingEvents] = useState(null)
-  const [loadingExisting, setLoadingExisting] = useState(false)
-  const [refreshingAdvisories, setRefreshingAdvisories] = useState(false)
-  const [advisoryResult, setAdvisoryResult] = useState(null)
+  const [expandedErrors, setExpandedErrors] = useState(new Set())
+  const logEndRef = useRef(null)
 
   async function handleRun(source) {
     setRunning(true)
