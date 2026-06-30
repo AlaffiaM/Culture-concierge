@@ -246,6 +246,8 @@ export default function AdminSpots() {
             </div>
           )}
 
+          <Pagination />
+
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
