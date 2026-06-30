@@ -222,7 +222,7 @@ export default function AdminEvents() {
                   <th style={{ width: 50 }}>Image</th>
                   <th>Name</th>
                   <th>Venue</th>
-                  <th>Price</th>
+                  {hasPrice && <th>Price</th>}
                   <th>City</th>
                   <th>Date</th>
                   <th>Status</th>
