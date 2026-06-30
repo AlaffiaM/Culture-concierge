@@ -30,6 +30,7 @@ export default function AdminEvents() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [filterCity, setFilterCity] = useState('All')
+  const [filterPillar, setFilterPillar] = useState('All')
   const [search, setSearch] = useState('')
   const [showEditor, setShowEditor] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
