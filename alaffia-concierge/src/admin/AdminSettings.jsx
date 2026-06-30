@@ -196,9 +196,54 @@ export default function AdminSettings({ user }) {
         </p>
       </div>
 
-        <div className="admin-stat-card">
-          <div className="admin-stat-header">
-            <div className="admin-stat-icon white">🔥</div>
+      {/* Cities */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">Active Cities</h3>
+        <p className="settings-note">Toggle which cities are active in the system.</p>
+        <div className="city-toggles">
+          {ALL_CITIES.map(city => (
+            <label key={city} className="city-toggle">
+              <input
+                type="checkbox"
+                checked={activeCities.includes(city)}
+                onChange={() => toggleCity(city)}
+              />
+              <span className="city-toggle-label">{city}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Categories & Vibe Tags */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">Categories &amp; Vibe Tags</h3>
+        <p className="settings-note">Manage vibe tags used across events and spots.</p>
+        <div className="vibe-tags-area">
+          {vibeTags.map(tag => (
+            <span key={tag} className="vibe-tag">
+              {tag}
+              <button className="vibe-tag-remove" onClick={() => removeVibeTag(tag)}>✕</button>
+            </span>
+          ))}
+        </div>
+        <div className="vibe-tag-add-row">
+          <input
+            type="text"
+            placeholder="Add new vibe tag (e.g. #HiddenGem)"
+            value={newVibe}
+            onChange={e => setNewVibe(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') addVibeTag() }}
+          />
+          <button className="admin-btn admin-btn-secondary" onClick={addVibeTag} disabled={!newVibe.trim()}>Add</button>
+        </div>
+        <details className="settings-details">
+          <summary>Show preset suggestions</summary>
+          <div className="vibe-presets">
+            {PRESET_VIBES.filter(t => !vibeTags.includes(t)).map(tag => (
+              <button key={tag} className="vibe-preset-btn" onClick={() => { setNewVibe(tag) }}>
+                {tag}
+              </button>
+            ))}
           </div>
           <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
             Firebase
