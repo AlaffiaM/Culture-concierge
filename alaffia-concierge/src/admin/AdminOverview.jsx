@@ -63,7 +63,11 @@ export default function AdminOverview({ onNavigate }) {
         {statEntries.map(({ key, label, tooltip }) => {
           const meta = STAT_ICONS[key]
           return (
-            <div key={key} className="admin-stat-card">
+            <div
+              key={key}
+              className="admin-stat-card admin-stat-card-clickable"
+              onClick={() => onNavigate(meta?.nav || 'events')}
+            >
               <div className="admin-stat-header">
                 <div className={`admin-stat-icon ${meta?.color || 'white'}`}>
                   {meta?.icon || '•'}
