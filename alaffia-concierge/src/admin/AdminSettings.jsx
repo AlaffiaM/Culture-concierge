@@ -26,6 +26,89 @@ function formatDate(d) {
 }
 
 export default function AdminSettings({ user }) {
+  const [health, setHealth] = useState(null)
+  const [team, setTeam] = useState([])
+  const [vibeTags, setVibeTags] = useState([])
+  const [newVibe, setNewVibe] = useState('')
+  const [activeCities, setActiveCities] = useState(ALL_CITIES)
+  const [loading, setLoading] = useState(true)
+  const [clearing, setClearing] = useState(false)
+  const [clearResult, setClearResult] = useState(null)
+  const [confirmDanger, setConfirmDanger] = useState('')
+
+  useEffect(() => {
+    Promise.all([
+      adminFetch('/api/admin/health'),
+      adminFetch('/api/admin/team'),
+      adminFetch('/api/admin/vibe-tags'),
+    ]).then(([h, t, v]) => {
+      setHealth(h)
+      setTeam(t)
+      setVibeTags(v)
+    }).catch(err => console.error('[AdminSettings]', err.message))
+      .finally(() => setLoading(false))
+  }, [])
+
+  function toggleCity(city) {
+    setActiveCities(prev =>
+      prev.includes(city) ? prev.filter(c => c !== city) : [...prev, city]
+    )
+  }
+
+  function addVibeTag() {
+    const tag = newVibe.trim()
+    if (!tag || vibeTags.includes(tag)) return
+    setVibeTags(prev => [...prev, tag].sort())
+    setNewVibe('')
+  }
+
+  function removeVibeTag(tag) {
+    setVibeTags(prev => prev.filter(t => t !== tag))
+  }
+
+  async function handleExport(type) {
+    try {
+      const token = await user?.getIdToken()
+      const res = await fetch(`${API_BASE}/api/admin/export/${type}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (!res.ok) throw new Error('Export failed')
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${type}-export.csv`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      alert(`Export failed: ${err.message}`)
+    }
+  }
+
+  async function handleClearScraped() {
+    if (confirmDanger !== 'CLEAR') return
+    setClearing(true)
+    setClearResult(null)
+    try {
+      const res = await adminFetch('/api/admin/scraped-events', { method: 'DELETE' })
+      setClearResult({ ok: true, deleted: res.deleted })
+      setConfirmDanger('')
+    } catch (err) {
+      setClearResult({ ok: false, message: err.message })
+    } finally {
+      setClearing(false)
+    }
+  }
+
+  const HEALTHY_COLOR = '#8A9A5B'
+  const WARN_COLOR = '#f0b429'
+  const BAD_COLOR = '#dc3232'
+  const IDLE_COLOR = '#666'
+
+  function envVal(key) {
+    return import.meta.env[key] || 'Not set'
+  }
+
   return (
     <div>
       <div style={{
