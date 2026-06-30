@@ -540,7 +540,7 @@ export default function AdminScraper() {
       {results?.events?.length === 0 && (
         <div className="admin-stat-card" style={{ textAlign: 'center', padding: 24, marginBottom: 28 }}>
           <p style={{ color: 'var(--admin-text-muted)', margin: 0 }}>
-            No scraped events in the database.
+            No new events found — all already in the database.
           </p>
         </div>
       )}
