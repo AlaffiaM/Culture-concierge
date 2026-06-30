@@ -5,9 +5,32 @@ import SpotEditor from './SpotEditor'
 const CITIES = ['All', 'Lagos', 'Abuja', 'Kigali', 'Nairobi']
 const PILLARS = ['All', 'CULTURE', 'WELLNESS', 'SOCIAL']
 
-const SOURCE_LABELS = {
-  curated: 'Curated',
-  manual: 'Manual',
+const SCRAPER_SOURCES = ['gemini', 'ticketsasa', 'kenyabuzz', 'mookh', 'eventbrite']
+
+function sourceStyle(source) {
+  if (!source) return { bg: 'rgba(255,255,255,0.06)', color: '#666', label: '—' }
+  const s = source.toLowerCase()
+  if (s === 'manual' || s === 'curated') {
+    return { bg: 'rgba(91,107,138,0.15)', color: '#6B7F9E', label: source.toUpperCase() }
+  }
+  if (SCRAPER_SOURCES.includes(s)) {
+    return { bg: 'rgba(138,154,91,0.15)', color: '#8A9A5B', label: source.toUpperCase() }
+  }
+  return { bg: 'rgba(255,255,255,0.06)', color: '#888', label: source.toUpperCase() }
+}
+
+function timeAgo(date) {
+  if (!date) return '—'
+  const now = Date.now()
+  const diff = now - new Date(date).getTime()
+  const mins = Math.floor(diff / 60000)
+  const hours = Math.floor(diff / 3600000)
+  const days = Math.floor(diff / 86400000)
+  if (mins < 1) return 'Just now'
+  if (mins < 60) return `${mins}m ago`
+  if (hours < 24) return `${hours}h ago`
+  if (days < 7) return `${days}d ago`
+  return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 export default function AdminSpots() {
