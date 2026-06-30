@@ -33,7 +33,20 @@ app.use("/api/advisories", advisoriesRoute);
 // Connect to MongoDB Atlas
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
+  .then(() => {
+    console.log("MongoDB connected")
+    const Event = require('./models/Event')
+    const cleanup = async () => {
+      try {
+        const { deletedCount } = await Event.deleteMany({ date: { $lt: new Date() } })
+        if (deletedCount > 0) console.log(`[cleanup] Deleted ${deletedCount} past event(s)`)
+      } catch (err) {
+        console.error('[cleanup] Error:', err.message)
+      }
+    }
+    setTimeout(cleanup, 30000)
+    setInterval(cleanup, 3600000)
+  })
   .catch((err) => console.log("MongoDB connection failed:", err.message));
 
 // SPA catch-all — serve frontend for non-API requests
