@@ -112,18 +112,22 @@ function App() {
   useEffect(() => {
     const cached = sessionStorage.getItem('alaffia_spots')
     if (cached) {
-      try { setAllSpots(JSON.parse(cached)) } catch {}
+      try {
+        const parsed = JSON.parse(cached)
+        setAllSpots(Array.isArray(parsed) ? parsed : (parsed.spots || []))
+      } catch {}
     }
 
-    fetch(API_BASE + "/api/spots")
+    fetch(API_BASE + "/api/spots?all=true")
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         return res.json()
       })
       .then((data) => {
-        setAllSpots(data)
+        const list = Array.isArray(data) ? data : (data.spots || [])
+        setAllSpots(list)
         setSpotsError(null)
-        sessionStorage.setItem('alaffia_spots', JSON.stringify(data))
+        sessionStorage.setItem('alaffia_spots', JSON.stringify(list))
       })
       .catch((err) => {
         console.error('[spots] Fetch failed:', err.name, err.message, err.cause || '')
