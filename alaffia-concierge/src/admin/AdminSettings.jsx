@@ -191,6 +191,10 @@ export default function AdminSettings({ user }) {
             </div>
           </div>
         </div>
+        <p className="settings-note">
+          Environment variables are configured on the server. API keys are never exposed in the UI.
+        </p>
+      </div>
 
         <div className="admin-stat-card">
           <div className="admin-stat-header">
