@@ -1,4 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { adminFetch } from './adminApi'
+
+const ALL_CITIES = ['Lagos', 'Abuja', 'Kigali', 'Nairobi']
+
+const PRESET_VIBES = [
+  '#SocialCreative', '#QuietIntellectual', '#ActiveWellness', '#HighCulture',
+  '#PremiumLuxury', '#NatureEscape', '#WellnessRetreat', '#Nightlife',
+  '#Underground', '#StreetCulture', '#Foodie', '#Workshop', '#HiddenGem',
+]
+
+const API_BASE = import.meta.env.VITE_API_URL || '(local proxy)'
+
+function formatUptime(seconds) {
+  const d = Math.floor(seconds / 86400)
+  const h = Math.floor((seconds % 86400) / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  if (d > 0) return `${d}d ${h}h ${m}m`
+  if (h > 0) return `${h}h ${m}m`
+  return `${m}m`
+}
+
+function formatDate(d) {
+  if (!d) return '—'
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+}
 
 export default function AdminSettings({ user }) {
   return (
