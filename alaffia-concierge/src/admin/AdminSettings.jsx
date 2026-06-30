@@ -245,8 +245,65 @@ export default function AdminSettings({ user }) {
               </button>
             ))}
           </div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
-            Firebase
+        </details>
+      </div>
+
+      {/* Export Data */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">Export Data</h3>
+        <p className="settings-note">Download your data as CSV files for reporting or migration.</p>
+        <div className="export-actions">
+          <button className="admin-quick-action" onClick={() => handleExport('events')} style={{ flex: 1 }}>
+            <div className="admin-quick-action-icon copper">📅</div>
+            <div className="admin-quick-action-body">
+              <h4>Export Events to CSV</h4>
+              <p>Download all events with city, date, pillar, and source</p>
+            </div>
+          </button>
+          <button className="admin-quick-action" onClick={() => handleExport('spots')} style={{ flex: 1 }}>
+            <div className="admin-quick-action-icon sage">📍</div>
+            <div className="admin-quick-action-body">
+              <h4>Export Spots to CSV</h4>
+              <p>Download all spots with type, pillar, and status</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Team Members */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">Team Members</h3>
+        <p className="settings-note">Admins have full access to all content and settings.</p>
+        <div className="team-list">
+          {team.map((member, i) => (
+            <div key={i} className="team-row">
+              <div className="team-avatar">{member.email[0].toUpperCase()}</div>
+              <div className="team-info">
+                <span className="team-email">{member.email}</span>
+                <span className="team-role">{member.role}</span>
+              </div>
+              <span className="team-badge">{member.added}</span>
+            </div>
+          ))}
+        </div>
+        <button className="admin-btn admin-btn-secondary" style={{ marginTop: 10 }} disabled>
+          Invite Admin
+        </button>
+        <span style={{ marginLeft: 8, fontSize: 11, color: 'var(--admin-text-muted)' }}>
+          Invite via <code style={{ color: 'var(--admin-copper)', background: 'rgba(180,95,45,0.1)', padding: '1px 6px', borderRadius: 4, fontSize: 11 }}>ADMIN_EMAILS</code> environment variable
+        </span>
+      </div>
+
+      {/* Danger Zone */}
+      <div className="settings-section danger-zone">
+        <h3 className="admin-section-title" style={{ color: '#dc3232' }}>Danger Zone</h3>
+        <p className="settings-note" style={{ color: '#e55555' }}>
+          These actions are irreversible. Proceed with caution.
+        </p>
+        <div className="danger-card">
+          <div className="danger-info">
+            <strong>Clear all scraped events</strong>
+            <p>This permanently deletes all events imported from external scrapers (Ticketsasa, KenyaBuzz, Mookh, Eventbrite). Manually created events will not be affected.</p>
           </div>
           <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
             alaffia-concierge
