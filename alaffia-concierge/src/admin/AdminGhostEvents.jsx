@@ -12,7 +12,6 @@ export default function AdminGhostEvents() {
   const [search, setSearch] = useState('')
   const [showEditor, setShowEditor] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
-  const [selectedIds, setSelectedIds] = useState(new Set())
   const [venueExpanded, setVenueExpanded] = useState(new Set())
   const [detailEvent, setDetailEvent] = useState(null)
 
