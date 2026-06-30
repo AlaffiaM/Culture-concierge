@@ -379,6 +379,21 @@
   margin: 0;
 }
 
+/* ===== Clickable interactive elements ===== */
+
+.clickable {
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.clickable:hover {
+  filter: brightness(1.15);
+}
+
+.clickable:active {
+  transform: scale(0.98);
+}
+
 /* ===== Activity Feed ===== */
 
 .admin-activity-feed {
