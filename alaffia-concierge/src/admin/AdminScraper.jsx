@@ -11,9 +11,64 @@ const SOURCE_LABELS = {
   eventbrite: 'Eventbrite',
 }
 
-const SOURCE_NOTES = {
-  kenyabuzz: 'Requires Puppeteer — Angular SPA',
-  mookh: 'Requires Puppeteer — Next.js SPA',
+const SOURCE_COLORS = {
+  ticketsasa: '#B45F2D',
+  kenyabuzz: '#8A9A5B',
+  mookh: '#5B8A9A',
+  eventbrite: '#9A5B8A',
+}
+
+function sanitize(text) {
+  if (!text) return text
+  let s = String(text)
+  s = s.replace(/\n\s+at\s+.+/g, '')
+  s = s.replace(/(api[_-]?key|apikey|secret|password|token|auth)['":]?\s*[:=]\s*['"]?[a-zA-Z0-9_\-\.]{8,}['"]?/gi, '$1: [REDACTED]')
+  s = s.replace(/mongodb(?:\+srv)?:\/\/[^\s'"]+/g, 'mongodb://[REDACTED]')
+  s = s.replace(/https?:\/\/[^:]+:[^@]+@/g, 'https://[REDACTED]@')
+  s = s.replace(/Bearer\s+[a-zA-Z0-9_\-\.]+/g, 'Bearer [REDACTED]')
+  s = s.replace(/Authorization['":]?\s*[:=]\s*['"]?[a-zA-Z0-9_\-\.]+['"]?/gi, 'Authorization: [REDACTED]')
+  return s.trim()
+}
+
+function humanSummary(log) {
+  const label = SOURCE_LABELS[log.source] || log.source
+  if (log.type === 'start') return `${label}: Fetching events...`
+  if (log.type === 'error') return `${label}: Import failed`
+  if (log.type === 'success') {
+    const n = log.message.match(/(\d+)\s+new/)
+    const num = n ? n[1] : '0'
+    return `${label}: ${num} events imported`
+  }
+  return `${label}: ${log.message}`
+}
+
+function StatusIcon({ type }) {
+  if (type === 'start') {
+    return (
+      <div className="sf-icon sf-icon-running">
+        <div className="sf-spinner" />
+      </div>
+    )
+  }
+  if (type === 'success') {
+    return (
+      <div className="sf-icon sf-icon-success">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 7.5L5.5 10L11 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    )
+  }
+  if (type === 'error') {
+    return (
+      <div className="sf-icon sf-icon-error">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </div>
+    )
+  }
+  return null
 }
 
 export default function AdminScraper() {
