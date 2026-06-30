@@ -86,7 +86,7 @@ export default function AdminEvents() {
     if (selectedIds.size === 0) return
     if (!confirm(`Delete ${selectedIds.size} event(s)? This cannot be undone.`)) return
     for (const id of selectedIds) {
-      await adminFetch(`/api/events/${id}/approve`, { method: 'PUT' }).catch(() => {})
+      await adminFetch(`/api/events/${id}`, { method: 'DELETE' }).catch(() => {})
     }
     setSelectedIds(new Set())
     loadEvents()
