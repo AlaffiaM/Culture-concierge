@@ -330,15 +330,6 @@ export default function AdminSettings({ user }) {
           )}
         </div>
       </div>
-
-      <p style={{
-        fontSize: 12,
-        color: 'var(--admin-text-muted)',
-        lineHeight: 1.6,
-        maxWidth: 480,
-      }}>
-        Admin email management is configured via the <code style={{ color: 'var(--admin-copper)', background: 'rgba(180,95,45,0.1)', padding: '1px 6px', borderRadius: 4, fontSize: 11 }}>ADMIN_EMAILS</code> environment variable on the backend. Contact a developer to add or remove admin users.
-      </p>
     </div>
   )
 }
