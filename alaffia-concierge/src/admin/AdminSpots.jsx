@@ -54,10 +54,7 @@ export default function AdminSpots() {
 
     adminFetch(`/api/spots?${params}`)
       .then(data => {
-        let filtered = data
-        if (filterCity !== 'All') {
-          filtered = filtered.filter(s => s.city?.toLowerCase() === filterCity.toLowerCase())
-        }
+        let filtered = data.spots || []
         if (filterPillar !== 'All') {
           filtered = filtered.filter(s => s.pillar === filterPillar)
         }
