@@ -285,6 +285,8 @@ export default function AdminEvents() {
               </tbody>
             </table>
           </div>
+
+          <Pagination />
         </>
       )}
     </div>
