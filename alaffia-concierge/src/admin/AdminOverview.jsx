@@ -169,13 +169,35 @@ export default function AdminOverview({ onNavigate }) {
               ))}
             </div>
           </div>
-          <div className="admin-city-list">
-            {stats.spotsByCity.map(c => (
-              <div key={c.city} className="admin-city-row">
-                <span>{c.city}</span>
-                <span>{c.count}</span>
-              </div>
-            ))}
+
+          {/* Events by City quick list */}
+          <div>
+            <div className="admin-section-header">
+              <h3 className="admin-section-title">Events by City</h3>
+            </div>
+            <div className="admin-city-list">
+              {(stats.eventsByCity || []).map(c => (
+                <div key={c.city} className="admin-city-row clickable" onClick={() => onNavigate('events')}>
+                  <span>{c.city}</span>
+                  <span>{c.count}</span>
+                </div>
+              ))}
+            </div>
+            {stats.spotsByCity?.length > 0 && (
+              <>
+                <div className="admin-section-header" style={{ marginTop: 16 }}>
+                  <h3 className="admin-section-title">Spots by City</h3>
+                </div>
+                <div className="admin-city-list">
+                  {stats.spotsByCity.map(c => (
+                    <div key={c.city} className="admin-city-row clickable" onClick={() => onNavigate('spots')}>
+                      <span>{c.city}</span>
+                      <span>{c.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
