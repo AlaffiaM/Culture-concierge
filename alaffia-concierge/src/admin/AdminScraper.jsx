@@ -167,21 +167,6 @@ export default function AdminScraper() {
     }
   }
 
-  async function handleRefreshAdvisories() {
-    setRefreshingAdvisories(true)
-    setAdvisoryResult(null)
-    try {
-      const res = await adminFetch('/api/advisories/refresh', {
-        method: 'POST',
-      })
-      setAdvisoryResult(res)
-    } catch (err) {
-      setAdvisoryResult({ error: err.message })
-    } finally {
-      setRefreshingAdvisories(false)
-    }
-  }
-
   function formatDate(d) {
     if (!d) return '—'
     const date = new Date(d)
