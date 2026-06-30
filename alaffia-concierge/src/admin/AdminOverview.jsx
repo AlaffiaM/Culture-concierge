@@ -119,10 +119,13 @@ export default function AdminOverview({ onNavigate }) {
         )}
       </div>
 
-      {stats.eventsByCity?.length > 0 && (
-        <div style={{ marginBottom: 28 }}>
-          <div className="admin-section-header">
-            <h3 className="admin-section-title">Events by City</h3>
+      {/* Quick Actions */}
+      <div className="admin-quick-actions" style={{ marginBottom: 28 }}>
+        <button className="admin-quick-action" onClick={() => onNavigate('events')}>
+          <div className="admin-quick-action-icon copper">➕</div>
+          <div className="admin-quick-action-body">
+            <h4>Add New Event</h4>
+            <p>Create a new event listing</p>
           </div>
           <div className="admin-city-list">
             {stats.eventsByCity.map(c => (
