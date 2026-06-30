@@ -86,6 +86,11 @@ export default function AdminScraper() {
     if (logEndRef.current) {
       logEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
+  }, [logs])
+
+  function addLog(source, message, type) {
+    const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    setLogs(prev => [...prev, { time, source, message: sanitize(message), type }])
   }
 
   async function loadExistingScraped() {
