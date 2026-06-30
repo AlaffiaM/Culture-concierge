@@ -198,7 +198,6 @@ export default function AdminSpots() {
 
   return (
     <div>
-      {/* All Spots */}
       <div className="admin-toolbar">
         <button className="admin-btn admin-btn-primary" onClick={handleCreate}>+ Create Spot</button>
         <button className="admin-btn" onClick={() => handleFindImages(false)} disabled={findLoading} style={{ marginLeft: 8 }}>
