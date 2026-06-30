@@ -53,6 +53,9 @@ export default function AdminEvents() {
           )
         }
         setEvents(filtered)
+        setTotal(data.total || 0)
+        setTotalPages(data.totalPages || 1)
+        setSelectedIds(new Set())
       })
       .catch(err => console.error('[AdminEvents]', err.message))
   }
