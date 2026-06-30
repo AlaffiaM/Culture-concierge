@@ -110,13 +110,9 @@ export default function AdminSettings({ user }) {
   }
 
   return (
-    <div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: 12,
-        marginBottom: 32,
-      }}>
+    <div className="settings-page">
+      {/* Admin Profile */}
+      <div className="settings-grid">
         <div className="admin-stat-card">
           <div className="admin-stat-header">
             <div className="admin-stat-icon white">👤</div>
