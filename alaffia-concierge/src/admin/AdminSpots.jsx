@@ -207,7 +207,7 @@ export default function AdminSpots() {
           <option value="All">All Cities</option>
           {CITIES.filter(c => c !== 'All').map(c => <option key={c} value={c}>{c}</option>)}
         </select>
-        <select value={filterPillar} onChange={e => setFilterPillar(e.target.value)}>
+        <select value={filterPillar} onChange={e => { setFilterPillar(e.target.value); setPage(1) }}>
           {PILLARS.map(p => <option key={p} value={p}>{p}</option>)}
         </select>
       </div>
