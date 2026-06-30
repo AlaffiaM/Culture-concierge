@@ -146,10 +146,15 @@ export default function AdminScraper() {
           setStatus(src, { state: 'done', count: newCount, fetched: r.fetched, skipped, rejected })
           addLog(src, `${newCount} new, ${skipped} skipped${rejected ? `, ${rejected} rejected` : ''}`, 'success')
         }
-        setSelectedIds(new Set())
-      })
-      .catch(err => console.error('[AdminScraper] Accept failed:', err.message))
-      .finally(() => setAccepting(false))
+
+        setResults(res)
+        setLastRefresh(new Date())
+      } catch (err) {
+        setStatus(src, { state: 'error', count: 0, error: err.message })
+        addLog(src, err.message, 'error')
+        setLastRefresh(new Date())
+      }
+    }
   }
 
   async function loadHistory() {
