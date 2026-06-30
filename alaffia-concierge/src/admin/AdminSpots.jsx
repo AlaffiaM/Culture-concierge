@@ -58,6 +58,14 @@ export default function AdminSpots() {
         if (filterPillar !== 'All') {
           filtered = filtered.filter(s => s.pillar === filterPillar)
         }
+        if (search) {
+          const q = search.toLowerCase()
+          filtered = filtered.filter(s =>
+            s.name?.toLowerCase().includes(q) ||
+            s.city?.toLowerCase().includes(q) ||
+            (s.tags || []).some(t => t.toLowerCase().includes(q))
+          )
+        }
         setSpots(filtered)
       })
       .catch(err => console.error('[AdminSpots]', err.message))
