@@ -203,8 +203,9 @@ export default function AdminSpots() {
         <button className="admin-btn" onClick={() => handleFindImages(false)} disabled={findLoading}>
           {findLoading ? 'Searching...' : 'Find Images'}
         </button>
-        <select value={filterCity} onChange={e => setFilterCity(e.target.value)}>
-          {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+        <select value={filterCity} onChange={e => { setFilterCity(e.target.value); setPage(1) }}>
+          <option value="All">All Cities</option>
+          {CITIES.filter(c => c !== 'All').map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <select value={filterPillar} onChange={e => setFilterPillar(e.target.value)}>
           {PILLARS.map(p => <option key={p} value={p}>{p}</option>)}
