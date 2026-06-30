@@ -55,6 +55,7 @@ export default function AdminOverview({ onNavigate }) {
       seen.add(c.city)
     }
   }
+  const cityMax = allCities.length ? Math.max(...allCities.map(c => c.count)) : 1
 
   return (
     <div>
