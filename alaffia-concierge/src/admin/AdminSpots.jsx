@@ -36,6 +36,9 @@ function timeAgo(date) {
 
 export default function AdminSpots() {
   const [spots, setSpots] = useState([])
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [filterCity, setFilterCity] = useState('All')
   const [filterPillar, setFilterPillar] = useState('All')
   const [showEditor, setShowEditor] = useState(false)
