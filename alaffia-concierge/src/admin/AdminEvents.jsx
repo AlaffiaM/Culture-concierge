@@ -3,6 +3,26 @@ import { adminFetch } from './adminApi'
 import EventEditor from './EventEditor'
 
 const CITIES = ['All', 'Lagos', 'Abuja', 'Kigali', 'Nairobi']
+const PILLARS = ['All', 'CULTURE', 'WELLNESS', 'SOCIAL']
+const PAGE_SIZE = 20
+
+const PILLAR_STYLE = {
+  CULTURE: { bg: 'rgba(180,95,45,0.15)', color: '#B45F2D' },
+  WELLNESS: { bg: 'rgba(138,154,91,0.15)', color: '#8A9A5B' },
+  SOCIAL: { bg: 'rgba(91,138,154,0.15)', color: '#5B8A9A' },
+}
+
+function vibeStyle(vibe) {
+  if (!vibe) return null
+  const v = vibe.toLowerCase()
+  if (/wellness|nature|retreat|active|fitness|spa|yoga/.test(v))
+    return { bg: 'rgba(138,154,91,0.15)', color: '#8A9A5B' }
+  if (/culture|creative|intellectual|premium|luxury|high|art|museum/.test(v))
+    return { bg: 'rgba(180,95,45,0.15)', color: '#B45F2D' }
+  if (/social|night|underground|street|food|workshop|party|vibrant/.test(v))
+    return { bg: 'rgba(91,138,154,0.15)', color: '#5B8A9A' }
+  return { bg: 'rgba(255,255,255,0.06)', color: '#888' }
+}
 
 export default function AdminEvents() {
   const [events, setEvents] = useState([])
