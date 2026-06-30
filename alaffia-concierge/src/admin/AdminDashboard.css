@@ -234,6 +234,21 @@
   background: var(--admin-card-hover);
 }
 
+/* Clickable stat card */
+.admin-stat-card-clickable {
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.admin-stat-card-clickable:hover {
+  background: var(--admin-card-hover);
+  border-color: rgba(180,95,45,0.2);
+}
+
+.admin-stat-card-clickable:active {
+  transform: scale(0.98);
+}
+
 .admin-stat-header {
   display: flex;
   align-items: center;
