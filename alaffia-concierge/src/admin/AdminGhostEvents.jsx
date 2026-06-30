@@ -116,7 +116,6 @@ export default function AdminGhostEvents() {
                   <th>Price</th>
                   <th>City</th>
                   <th>Date</th>
-                  <th>Status</th>
                   <th>Vibe</th>
                   <th>Linked To</th>
                   <th>Actions</th>
