@@ -537,10 +537,8 @@ export default function AdminScraper() {
         </div>
       )}
 
-      {existingEvents && existingEvents.length > 0 && renderTable(existingEvents, 'Existing scraped events')}
-
-      {existingEvents && existingEvents.length === 0 && (
-        <div className="admin-stat-card" style={{ textAlign: 'center', padding: 32 }}>
+      {results?.events?.length === 0 && (
+        <div className="admin-stat-card" style={{ textAlign: 'center', padding: 24, marginBottom: 28 }}>
           <p style={{ color: 'var(--admin-text-muted)', margin: 0 }}>
             No scraped events in the database.
           </p>
