@@ -74,7 +74,12 @@ export default function AdminOverview({ onNavigate }) {
                 </div>
               </div>
               <div className="admin-stat-number">{stats[key] ?? 0}</div>
-              <div className="admin-stat-label">{label}</div>
+              <div className="admin-stat-label">
+                {label}
+                {tooltip && (
+                  <span className="tooltip-icon" data-tooltip={tooltip}>?</span>
+                )}
+              </div>
             </div>
           )
         })}
