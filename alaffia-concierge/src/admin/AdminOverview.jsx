@@ -85,13 +85,14 @@ export default function AdminOverview({ onNavigate }) {
         })}
       </div>
 
-      {stats.draftEvents > 0 && (
-        <div className="admin-quick-actions">
-          <button className="admin-quick-action" onClick={() => onNavigate('events')}>
-            <div className="admin-quick-action-icon copper">⏳</div>
-            <div className="admin-quick-action-body">
-              <h4>{stats.draftEvents} event{stats.draftEvents !== 1 ? 's' : ''} pending review</h4>
-              <p>Click to review and approve</p>
+      {/* Insights + Pillar Strip */}
+      <div className="admin-insights-row">
+        {stats.eventsThisWeek > 0 && (
+          <div className="admin-insight-card clickable" onClick={() => onNavigate('events')}>
+            <span className="admin-insight-icon">📈</span>
+            <div>
+              <span className="admin-insight-value">+{stats.eventsThisWeek}</span>
+              <span className="admin-insight-label">events this week</span>
             </div>
           </button>
           <button className="admin-quick-action" onClick={() => onNavigate('spots')}>
