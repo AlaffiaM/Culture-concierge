@@ -49,7 +49,7 @@ const TABS = [
 const PAGE_TITLES = {
   overview: 'Dashboard',
   events: 'Events',
-  ghosts: 'Ghost Events',
+  ghosts: 'Draft Events',
   spots: 'Spots',
   tags: 'Tags',
   settings: 'Settings',
