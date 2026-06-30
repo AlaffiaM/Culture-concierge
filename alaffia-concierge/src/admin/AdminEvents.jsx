@@ -174,16 +174,7 @@ export default function AdminEvents() {
     <div>
       <div className="admin-toolbar">
         <button className="admin-btn admin-btn-primary" onClick={handleCreate}>+ Create Event</button>
-        {STATUSES.map(s => (
-          <button
-            key={s}
-            className={`admin-btn ${filterStatus === s ? 'admin-btn-primary' : 'admin-btn-secondary'}`}
-            onClick={() => setFilterStatus(s)}
-          >
-            {s.charAt(0).toUpperCase() + s.slice(1)}
-          </button>
-        ))}
-        <select value={filterCity} onChange={e => setFilterCity(e.target.value)}>
+        <select value={filterCity} onChange={e => { setFilterCity(e.target.value); setPage(1) }}>
           {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <input
