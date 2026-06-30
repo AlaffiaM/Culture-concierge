@@ -177,6 +177,9 @@ export default function AdminEvents() {
         <select value={filterCity} onChange={e => { setFilterCity(e.target.value); setPage(1) }}>
           {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
+        <select value={filterPillar} onChange={e => { setFilterPillar(e.target.value); setPage(1) }}>
+          {PILLARS.map(p => <option key={p} value={p}>{p}</option>)}
+        </select>
         <input
           className="search-input"
           type="text"
