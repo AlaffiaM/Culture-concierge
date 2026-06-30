@@ -435,15 +435,29 @@ export default function AdminScraper() {
                 const isError = log.type === 'error'
                 const isExpanded = expandedErrors.has(idx)
                 return (
-                  <tr key={ev._id}>
-                    <td>
-                      {canAccept && (
-                        <input
-                          type="checkbox"
-                          checked={selectedIds.has(ev._id)}
-                          onChange={() => toggleSelect(ev._id)}
-                          style={{ accentColor: '#B45F2D' }}
-                        />
+                  <div key={idx} className="sf-item">
+                    <StatusIcon type={log.type} />
+                    <div className="sf-content">
+                      <div className="sf-row">
+                        <span className={isError ? 'sf-message sf-message-error' : 'sf-message'}>
+                          {humanSummary(log)}
+                        </span>
+                        <span className="sf-time">{log.time}</span>
+                      </div>
+                      {isError && (
+                        <div className="sf-error-details">
+                          <button
+                            className="sf-details-toggle"
+                            onClick={() => toggleError(idx)}
+                          >
+                            {isExpanded ? 'Hide Details' : 'View Details'}
+                          </button>
+                          {isExpanded && (
+                            <div className="sf-error-raw">
+                              {log.message}
+                            </div>
+                          )}
+                        </div>
                       )}
                     </td>
                     <td>
