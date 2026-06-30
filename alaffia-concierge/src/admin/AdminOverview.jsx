@@ -43,10 +43,17 @@ export default function AdminOverview({ onNavigate }) {
     { key: 'eventsThisWeek', label: 'Events This Week' },
   ]
 
-  const formatDate = (d) => {
-    if (!d) return ''
-    const date = new Date(d)
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  const maxCity = stats.eventsByCity?.length
+    ? stats.eventsByCity.reduce((a, b) => (a.count > b.count ? a : b))
+    : null
+
+  const allCities = []
+  const seen = new Set()
+  for (const c of [...(stats.eventsByCity || []), ...(stats.spotsByCity || [])]) {
+    if (!seen.has(c.city)) {
+      allCities.push(c)
+      seen.add(c.city)
+    }
   }
 
   return (
