@@ -565,7 +565,7 @@ export default function AdminScraper() {
             <div className="admin-activity-feed">
               {history.map(ev => (
                 <div key={ev._id} className="admin-activity-item">
-                  <div className={`admin-activity-dot ${ev.status === 'approved' ? 'sage' : 'copper'}`} />
+                  <div className="admin-activity-dot sage" />
                   <span style={{ fontWeight: 500 }}>{ev.name}</span>
                   <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
                     {SOURCE_LABELS[ev.source] || ev.source}
