@@ -293,12 +293,55 @@ export default function AdminSpots() {
                         ) : (
                           <div className="admin-thumb" style={{ background: 'rgba(255,255,255,0.04)' }} />
                         )}
-                        <button className="admin-btn-sm admin-btn-edit" onClick={() => handleEdit(spot)}>Edit</button>
-                        <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(spot._id)}>Delete</button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td style={{ fontWeight: 600 }}>{spot.name}</td>
+                      <td>{spot.city}</td>
+                      <td>{spot.pillar}</td>
+                      <td style={{ color: 'var(--admin-text-muted)', fontSize: 12 }}>{spot.type || '—'}</td>
+                      <td>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                          {(spot.vibeTags || []).slice(0, 4).map(tag => (
+                            <span key={tag} className="vibe-pill">{tag}</span>
+                          ))}
+                          {(spot.vibeTags || []).length > 4 && (
+                            <span className="vibe-pill-more">+{spot.vibeTags.length - 4}</span>
+                          )}
+                          {(spot.tags || []).length > 0 && (spot.vibeTags || []).length === 0 && (
+                            <span style={{ color: 'var(--admin-text-muted)', fontSize: 11 }}>
+                              {(spot.tags || []).slice(0, 3).join(', ')}{spot.tags?.length > 3 ? '...' : ''}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <span className="source-pill" style={{ background: src.bg, color: src.color }}>
+                          {src.label}
+                        </span>
+                      </td>
+                      <td style={{ fontSize: 12, color: 'var(--admin-text-muted)', whiteSpace: 'nowrap' }}>
+                        {timeAgo(spot.updatedAt)}
+                      </td>
+                      <td>
+                        <button
+                          className={`admin-status-badge ${spot.status === 'active' ? 'admin-status-active' : spot.status === 'scraped' ? 'admin-status-scraped' : 'admin-status-inactive'}`}
+                          onClick={() => handleToggleStatus(spot)}
+                          title="Click to toggle status"
+                        >
+                          {spot.status}
+                        </button>
+                      </td>
+                      <td>
+                        <div className="actions">
+                          {spot.status === 'scraped' && (
+                            <button className="admin-btn-sm admin-btn-approve" onClick={() => handleApproveSpot(spot._id)}>Approve</button>
+                          )}
+                          <button className="admin-btn-sm admin-btn-edit" onClick={() => handleEdit(spot)}>Edit</button>
+                          <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(spot._id)}>Delete</button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
