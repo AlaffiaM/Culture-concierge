@@ -74,7 +74,11 @@ export default function AdminSpots() {
       .catch(err => console.error('[AdminSpots]', err.message))
   }
 
-  useEffect(() => { loadSpots() }, [filterCity, filterPillar])
+  useEffect(() => { loadSpots() }, [filterCity, filterPillar, page])
+
+  function goToPage(p) {
+    if (p >= 1 && p <= totalPages) setPage(p)
+  }
 
   function selectAll() {
     if (selectedIds.size === spots.length) {
