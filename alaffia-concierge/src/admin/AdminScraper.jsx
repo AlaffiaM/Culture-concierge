@@ -534,19 +534,6 @@ export default function AdminScraper() {
               </tbody>
             </table>
           </div>
-
-          {results.events?.length > 0 && renderTable(results.events, 'Newly imported events')}
-
-          {results.events?.length === 0 && !existingEvents && (
-            <div className="admin-stat-card" style={{ textAlign: 'center', padding: 32 }}>
-              <p style={{ color: 'var(--admin-text-muted)', margin: '0 0 12px 0' }}>
-                No new events found — all already in the database.
-              </p>
-              <button className="admin-btn admin-btn-secondary" onClick={loadExistingScraped} disabled={loadingExisting}>
-                {loadingExisting ? 'Loading...' : 'Browse existing scraped events'}
-              </button>
-            </div>
-          )}
         </div>
       )}
 
