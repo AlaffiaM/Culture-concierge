@@ -103,9 +103,21 @@ export default function AdminOverview({ onNavigate }) {
               <span className="admin-insight-value">{maxCity.city}</span>
               <span className="admin-insight-label">most active city ({maxCity.count} events)</span>
             </div>
-          </button>
-        </div>
-      )}
+          </div>
+        )}
+        {stats.pillarBreakdown?.length > 0 && (
+          <div className="admin-pillar-strip clickable" onClick={() => onNavigate('events')}>
+            {stats.pillarBreakdown.map(p => {
+              const s = PILLAR_STYLES[p.pillar] || { bg: 'rgba(255,255,255,0.06)', text: '#888', label: p.pillar }
+              return (
+                <div key={p.pillar} className="admin-pillar-chip" style={{ background: s.bg, color: s.text }}>
+                  {s.label}: {p.count}
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
 
       {stats.eventsByCity?.length > 0 && (
         <div style={{ marginBottom: 28 }}>
