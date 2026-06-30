@@ -345,6 +345,8 @@ export default function AdminSpots() {
               </tbody>
             </table>
           </div>
+
+          <Pagination />
         </>
       )}
     </div>
