@@ -190,8 +190,6 @@ export default function AdminEvents() {
         />
       </div>
 
-
-
       {events.length === 0 ? (
         <p className="admin-empty">No events found.</p>
       ) : (
