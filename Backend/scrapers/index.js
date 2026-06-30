@@ -1,5 +1,10 @@
 const Event = require('../models/Event')
 
+const REJECTED_TERMS = [
+  'conference', 'corporate', 'seminar', 'summit', 'business',
+  'hackathon', 'webinar',
+]
+
 const CITY_COORDS = {
   Lagos: { lat: 6.5244, lng: 3.3792 },
   Abuja: { lat: 9.0765, lng: 7.3986 },
@@ -35,7 +40,20 @@ async function runScrapers(sources) {
       const scraped = await scraper.scrape()
       const unique = await deduplicate(scraped)
 
+      results[source] = {
+        fetched: scraped.length,
+        new: 0,
+        skipped: scraped.length - unique.length,
+        rejected: 0,
+      }
+
       for (const ev of unique) {
+        const text = `${ev.name} ${ev.description || ''}`.toLowerCase()
+        if (REJECTED_TERMS.some(t => text.includes(t))) {
+          results[source].rejected++
+          continue
+        }
+
         const coords = ev.coordinates || CITY_COORDS[ev.city] || CITY_COORDS.Nairobi
         const event = new Event({
           name: ev.name,
@@ -46,21 +64,17 @@ async function runScrapers(sources) {
           pillar: ev.pillar || 'CULTURE',
           type: ev.type || '',
           venue: ev.venue || '',
+          price: ev.price || '',
           source: ev.source || source,
-          status: 'scraped',
+          status: 'approved',
           isGhostLocation: true,
           coordinates: coords,
           tags: [source],
           time: ev.time || '',
         })
         await event.save()
+        results[source].new++
         allNew.push(event)
-      }
-
-      results[source] = {
-        fetched: scraped.length,
-        new: unique.length,
-        skipped: scraped.length - unique.length,
       }
     } catch (err) {
       results[source] = { fetched: 0, new: 0, skipped: 0, error: err.message }
