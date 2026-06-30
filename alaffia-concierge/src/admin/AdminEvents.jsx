@@ -60,7 +60,11 @@ export default function AdminEvents() {
       .catch(err => console.error('[AdminEvents]', err.message))
   }
 
-  useEffect(() => { loadEvents() }, [filterStatus, filterCity])
+  useEffect(() => { loadEvents() }, [filterCity, filterPillar, page])
+
+  function goToPage(p) {
+    if (p >= 1 && p <= totalPages) setPage(p)
+  }
 
   function selectAll() {
     if (selectedIds.size === events.length) {
