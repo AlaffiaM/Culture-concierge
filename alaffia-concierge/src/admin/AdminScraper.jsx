@@ -575,9 +575,15 @@ export default function AdminScraper() {
                 </div>
               ))}
             </div>
-          )}
-        </div>
-      )}
+          )
+        )}
+      </div>
+
+      {/* Venue Scraper */}
+      <div style={{ marginTop: 40, marginBottom: 12 }}>
+        <h3 className="admin-section-title">Venue Scraper</h3>
+      </div>
+      <AdminVenueScraper />
     </div>
   )
 }
