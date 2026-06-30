@@ -133,12 +133,39 @@ export default function AdminSettings({ user }) {
         </div>
       </div>
 
-        <div className="admin-stat-card">
-          <div className="admin-stat-header">
-            <div className="admin-stat-icon white">🔗</div>
-          </div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
-            API
+      {/* System Health */}
+      <div className="settings-section">
+        <h3 className="admin-section-title">System Health</h3>
+        <div className="settings-grid">
+          <div className="health-card">
+            <div className="health-card-row">
+              <span className="health-label">Database</span>
+              <span className="health-value" style={{ color: health?.database === 'connected' ? HEALTHY_COLOR : health?.database === 'connecting' ? WARN_COLOR : BAD_COLOR }}>
+                {health?.database === 'connected' ? '● Connected' : health?.database === 'connecting' ? '● Connecting' : '○ Disconnected'}
+              </span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Last Scraper Run</span>
+              <span className="health-value">{formatDate(health?.lastScraperRun)}</span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Gemini API</span>
+              <span className="health-value" style={{ color: health?.geminiKeyConfigured ? HEALTHY_COLOR : BAD_COLOR }}>
+                {health?.geminiKeyConfigured ? '● Configured' : '○ Not configured'}
+              </span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Server Uptime</span>
+              <span className="health-value">{health ? formatUptime(health.uptime) : '—'}</span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Total Events</span>
+              <span className="health-value">{health?.eventCount ?? '—'}</span>
+            </div>
+            <div className="health-card-row">
+              <span className="health-label">Total Spots</span>
+              <span className="health-value">{health?.spotCount ?? '—'}</span>
+            </div>
           </div>
           <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
             {import.meta.env.VITE_API_URL || '(dev proxy)'}
