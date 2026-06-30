@@ -202,14 +202,6 @@ export default function AdminEvents() {
               <button className="admin-btn-sm admin-btn-delete" onClick={bulkDelete}>
                 Delete Selected
               </button>
-              <button className="admin-btn-sm admin-btn-archive" onClick={bulkArchive}>
-                Archive All
-              </button>
-              {filterStatus === 'archived' && (
-                <button className="admin-btn-sm admin-btn-approve" onClick={bulkApprove}>
-                  Restore All
-                </button>
-              )}
             </div>
           )}
 
