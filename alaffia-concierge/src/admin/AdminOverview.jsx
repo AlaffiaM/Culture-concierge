@@ -134,8 +134,15 @@ export default function AdminOverview({ onNavigate }) {
             <h4>Run Scraper</h4>
             <p>Import events from external sources</p>
           </div>
-        </div>
-      )}
+        </button>
+        <button className="admin-quick-action" onClick={() => onNavigate('spots')}>
+          <div className="admin-quick-action-icon white">📍</div>
+          <div className="admin-quick-action-body">
+            <h4>{stats.totalSpots} Spots</h4>
+            <p>Manage venues and experiences</p>
+          </div>
+        </button>
+      </div>
 
       {stats.spotsByCity?.length > 0 && (
         <div style={{ marginBottom: 28 }}>
