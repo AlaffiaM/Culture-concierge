@@ -94,12 +94,14 @@ export default function AdminOverview({ onNavigate }) {
               <span className="admin-insight-value">+{stats.eventsThisWeek}</span>
               <span className="admin-insight-label">events this week</span>
             </div>
-          </button>
-          <button className="admin-quick-action" onClick={() => onNavigate('spots')}>
-            <div className="admin-quick-action-icon sage">📍</div>
-            <div className="admin-quick-action-body">
-              <h4>{stats.totalSpots} spots across {stats.spotsByCity?.length || 0} cities</h4>
-              <p>Manage your venues and experiences</p>
+          </div>
+        )}
+        {maxCity && (
+          <div className="admin-insight-card clickable" onClick={() => onNavigate('events')}>
+            <span className="admin-insight-icon">🔥</span>
+            <div>
+              <span className="admin-insight-value">{maxCity.city}</span>
+              <span className="admin-insight-label">most active city ({maxCity.count} events)</span>
             </div>
           </button>
         </div>
