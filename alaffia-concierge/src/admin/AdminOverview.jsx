@@ -204,9 +204,29 @@ export default function AdminOverview({ onNavigate }) {
 
       {/* Recent Events */}
       {recentEvents.length > 0 && (
-        <div>
-          <div className="admin-section-header">
-            <h3 className="admin-section-title">Recent Events</h3>
+        <div className="admin-dashboard-two-col" style={{ marginBottom: 28 }}>
+          <div>
+            <div className="admin-section-header">
+              <h3 className="admin-section-title">
+                Recent Events
+                <span className="admin-section-count">{recentEvents.length}</span>
+              </h3>
+            </div>
+            <div className="admin-activity-feed admin-activity-feed-scroll">
+              {recentEvents.map(ev => (
+                <div key={ev._id} className="admin-activity-item hover-row clickable" onClick={() => onNavigate('events')}>
+                  <div className={`admin-activity-dot ${ev.status === 'approved' ? 'sage' : 'copper'}`} />
+                  <div className="admin-activity-body">
+                    <span className="admin-activity-name">{ev.name}</span>
+                    <span className="admin-activity-meta">
+                      {ev.venue && <span className="admin-activity-venue">{ev.venue}</span>}
+                      <span>{ev.city || '—'}</span>
+                    </span>
+                  </div>
+                  <span className="admin-activity-date">{formatDate(ev.date)}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="admin-activity-feed">
             {recentEvents.map(ev => (
