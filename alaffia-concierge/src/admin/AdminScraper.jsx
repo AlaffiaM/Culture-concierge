@@ -72,7 +72,7 @@ function StatusIcon({ type }) {
 }
 
 export default function AdminScraper() {
-  const [running, setRunning] = useState(false)
+  const [sourceStatus, setSourceStatus] = useState({})
   const [results, setResults] = useState(null)
   const [selectedIds, setSelectedIds] = useState(new Set())
   const [accepting, setAccepting] = useState(false)
