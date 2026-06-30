@@ -2,15 +2,27 @@ const express = require('express')
 const router = express.Router()
 const Event = require('../models/Event')
 
-// GET /api/events — list approved events, filterable by city
+// GET /api/events — list events, filterable by city, with pagination
 router.get('/', async (req, res) => {
   try {
-    const filter = { status: 'approved' }
+    const filter = {}
+    if (req.query.all !== 'true') {
+      filter.status = 'approved'
+    }
     if (req.query.city) {
       filter.city = { $regex: req.query.city, $options: 'i' }
     }
-    const events = await Event.find(filter).sort({ date: 1 }).populate('linkedSpotId', 'name type')
-    res.json(events)
+
+    const page = Math.max(parseInt(req.query.page) || 1, 1)
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100)
+    const skip = (page - 1) * limit
+
+    const [events, total] = await Promise.all([
+      Event.find(filter).sort({ date: 1 }).skip(skip).limit(limit).populate('linkedSpotId', 'name type'),
+      Event.countDocuments(filter),
+    ])
+
+    res.json({ events, total, page, totalPages: Math.ceil(total / limit) || 1 })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -27,16 +39,6 @@ router.get('/upcoming', async (req, res) => {
       filter.city = { $regex: req.query.city, $options: 'i' }
     }
     const events = await Event.find(filter).sort({ date: 1 }).limit(20).populate('linkedSpotId', 'name type')
-    res.json(events)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-// GET /api/events/scraped — all scraped events (for scraper browse)
-router.get('/scraped', async (req, res) => {
-  try {
-    const events = await Event.find({ status: 'scraped' }).sort({ createdAt: -1 })
     res.json(events)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -100,7 +102,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// POST /api/events — create event (defaults to draft)
+// POST /api/events — create event (defaults to approved for admin)
 router.post('/', async (req, res) => {
   try {
     const event = new Event({
@@ -120,7 +122,7 @@ router.post('/', async (req, res) => {
       imageUrl: req.body.imageUrl,
       isGhostLocation: req.body.isGhostLocation || false,
       source: req.body.source || 'manual',
-      status: 'draft',
+      status: 'approved',
     })
     const saved = await event.save()
     res.status(201).json(saved)
@@ -146,21 +148,6 @@ router.put('/:id/approve', async (req, res) => {
     const event = await Event.findByIdAndUpdate(
       req.params.id,
       { status: 'approved' },
-      { returnDocument: 'after' }
-    )
-    if (!event) return res.status(404).json({ message: 'Event not found' })
-    res.json(event)
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
-
-// PUT /api/events/:id/archive — set status to archived
-router.put('/:id/archive', async (req, res) => {
-  try {
-    const event = await Event.findByIdAndUpdate(
-      req.params.id,
-      { status: 'archived' },
       { returnDocument: 'after' }
     )
     if (!event) return res.status(404).json({ message: 'Event not found' })
