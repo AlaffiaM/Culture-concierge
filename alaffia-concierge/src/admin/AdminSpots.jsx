@@ -200,7 +200,7 @@ export default function AdminSpots() {
     <div>
       <div className="admin-toolbar">
         <button className="admin-btn admin-btn-primary" onClick={handleCreate}>+ Create Spot</button>
-        <button className="admin-btn" onClick={() => handleFindImages(false)} disabled={findLoading} style={{ marginLeft: 8 }}>
+        <button className="admin-btn" onClick={() => handleFindImages(false)} disabled={findLoading}>
           {findLoading ? 'Searching...' : 'Find Images'}
         </button>
         <select value={filterCity} onChange={e => setFilterCity(e.target.value)}>
