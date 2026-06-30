@@ -210,6 +210,14 @@ export default function AdminSpots() {
         <select value={filterPillar} onChange={e => { setFilterPillar(e.target.value); setPage(1) }}>
           {PILLARS.map(p => <option key={p} value={p}>{p}</option>)}
         </select>
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search spots..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ marginBottom: 0, flex: 1, minWidth: 160 }}
+        />
       </div>
 
       {spots.length === 0 ? (
