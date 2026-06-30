@@ -235,7 +235,7 @@ export default function AdminSpots() {
               <button className="admin-btn-sm admin-btn-archive" onClick={() => bulkToggleStatus(false)}>
                 Deactivate All
               </button>
-              <button className="admin-btn-sm" onClick={() => handleFindImages(true)} disabled={findLoading} style={{ marginLeft: 4 }}>
+              <button className="admin-btn-sm" onClick={() => handleFindImages(true)} disabled={findLoading}>
                 Find Images
               </button>
             </div>
