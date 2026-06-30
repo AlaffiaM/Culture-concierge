@@ -273,48 +273,25 @@ export default function AdminSpots() {
                 </tr>
               </thead>
               <tbody>
-                {spots.map(spot => (
-                  <tr key={spot._id}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedIds.has(spot._id)}
-                        onChange={() => toggleSelect(spot._id)}
-                        style={{ accentColor: '#B45F2D' }}
-                      />
-                    </td>
-                    <td>
-                      {spot.images && spot.images.length > 0 ? (
-                        <a href={spot.images[0]} target="_blank" rel="noopener noreferrer">
-                          <img src={spot.images[0]} alt="" className="admin-thumb" />
-                        </a>
-                      ) : (
-                        <div className="admin-thumb" style={{ background: 'rgba(255,255,255,0.04)' }} />
-                      )}
-                    </td>
-                    <td style={{ fontWeight: 600 }}>{spot.name}</td>
-                    <td>{spot.city}</td>
-                    <td>{spot.pillar}</td>
-                    <td>{spot.type || '—'}</td>
-                    <td style={{ fontSize: 11 }}>{(spot.tags || []).slice(0, 3).join(', ')}{spot.tags?.length > 3 ? '...' : ''}</td>
-                    <td>
-                      <span className="admin-status-badge" style={{ background: 'rgba(180,95,45,0.1)', color: '#B45F2D', fontSize: 10 }}>
-                        {SOURCE_LABELS[spot.source] || spot.source}
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        className={`admin-status-badge ${spot.status === 'active' ? 'admin-status-active' : spot.status === 'scraped' ? 'admin-status-scraped' : 'admin-status-inactive'}`}
-                        onClick={() => handleToggleStatus(spot)}
-                        title="Click to toggle status"
-                      >
-                        {spot.status}
-                      </button>
-                    </td>
-                    <td>
-                      <div className="actions">
-                        {spot.status === 'scraped' && (
-                          <button className="admin-btn-sm admin-btn-approve" onClick={() => handleApproveSpot(spot._id)}>Approve</button>
+                {spots.map(spot => {
+                  const src = sourceStyle(spot.source)
+                  return (
+                    <tr key={spot._id} className="spots-hover-row">
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.has(spot._id)}
+                          onChange={() => toggleSelect(spot._id)}
+                          style={{ accentColor: '#B45F2D' }}
+                        />
+                      </td>
+                      <td>
+                        {spot.images && spot.images.length > 0 ? (
+                          <a href={spot.images[0]} target="_blank" rel="noopener noreferrer">
+                            <img src={spot.images[0]} alt="" className="admin-thumb" />
+                          </a>
+                        ) : (
+                          <div className="admin-thumb" style={{ background: 'rgba(255,255,255,0.04)' }} />
                         )}
                         <button className="admin-btn-sm admin-btn-edit" onClick={() => handleEdit(spot)}>Edit</button>
                         <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(spot._id)}>Delete</button>
