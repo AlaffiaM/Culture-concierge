@@ -60,7 +60,7 @@ export default function AdminOverview({ onNavigate }) {
   return (
     <div>
       <div className="admin-stats-grid">
-        {statEntries.map(({ key, label }) => {
+        {statEntries.map(({ key, label, tooltip }) => {
           const meta = STAT_ICONS[key]
           return (
             <div key={key} className="admin-stat-card">
