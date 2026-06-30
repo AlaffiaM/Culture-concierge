@@ -109,13 +109,13 @@ export default function AdminScraper() {
     })
   }
 
-  function selectAll(items) {
-    if (!items?.length) return
-    if (selectedIds.size === items.length) {
-      setSelectedIds(new Set())
-    } else {
-      setSelectedIds(new Set(items.map(e => e._id)))
-    }
+  function systemHealth() {
+    const states = SOURCES.map(s => getStatus(s).state)
+    const errors = states.filter(s => s === 'error').length
+    const running = states.filter(s => s === 'running').length
+    if (errors > 0) return { status: 'error', label: `${errors} source${errors > 1 ? 's' : ''} with errors`, color: '#dc3232' }
+    if (running > 0) return { status: 'running', label: 'Scraping in progress...', color: '#f0b429' }
+    return { status: 'healthy', label: 'All sources operational', color: '#8A9A5B' }
   }
 
   function handleAccept(idsOverride) {
