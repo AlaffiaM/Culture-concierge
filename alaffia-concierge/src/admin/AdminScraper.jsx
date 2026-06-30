@@ -74,8 +74,9 @@ function StatusIcon({ type }) {
 export default function AdminScraper() {
   const [sourceStatus, setSourceStatus] = useState({})
   const [results, setResults] = useState(null)
-  const [selectedIds, setSelectedIds] = useState(new Set())
-  const [accepting, setAccepting] = useState(false)
+  const [logs, setLogs] = useState([])
+  const [devMode, setDevMode] = useState(false)
+  const [lastRefresh, setLastRefresh] = useState(null)
   const [history, setHistory] = useState(null)
   const [showHistory, setShowHistory] = useState(false)
   const [venueExpanded, setVenueExpanded] = useState(new Set())
