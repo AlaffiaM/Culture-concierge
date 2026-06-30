@@ -38,10 +38,11 @@ export default function AdminEvents() {
   const [venueExpanded, setVenueExpanded] = useState(new Set())
 
   function loadEvents() {
-    let url = '/api/events'
-    if (filterStatus === 'draft') url = '/api/events/pending'
-    else if (filterStatus !== 'all') url = `/api/events?status=${filterStatus}`
-    adminFetch(url)
+    const params = new URLSearchParams({ all: 'true', page, limit: PAGE_SIZE })
+    if (filterCity !== 'All') params.set('city', filterCity)
+    if (filterPillar !== 'All') params.set('pillar', filterPillar)
+
+    adminFetch(`/api/events?${params}`)
       .then(data => {
         let filtered = data
         if (filterCity !== 'All') {
