@@ -401,24 +401,39 @@ export default function AdminScraper() {
           )}
         </div>
 
-        <div className="admin-table-wrap">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th style={{ width: 28 }}></th>
-                <th style={{ width: 50 }}>Image</th>
-                <th>Name</th>
-                <th>Venue</th>
-                <th>Price</th>
-                <th>City</th>
-                <th>Date</th>
-                <th>Pillar</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(ev => {
-                const canAccept = ev.status === 'scraped'
+        {devMode ? (
+          <div style={{
+            maxHeight: 200, overflowY: 'auto', padding: '8px 16px',
+            background: '#0a0a0a', fontFamily: "'Fira Code', 'Cascadia Code', 'Consolas', monospace", fontSize: 11, lineHeight: 1.6,
+          }}>
+            {logs.length === 0 ? (
+              <span style={{ color: 'var(--admin-text-muted)', fontStyle: 'italic' }}>No logs yet.</span>
+            ) : (
+              logs.map((log, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8, opacity: log.type === 'start' ? 0.7 : 1 }}>
+                  <span style={{ color: '#666', flexShrink: 0 }}>[{log.time}]</span>
+                  <span style={{ color: SOURCE_COLORS[log.source] || '#888', fontWeight: 600, flexShrink: 0, minWidth: 90 }}>
+                    {SOURCE_LABELS[log.source] || log.source}
+                  </span>
+                  <span style={{
+                    color: log.type === 'error' ? '#dc3232' : log.type === 'success' ? '#8A9A5B' : '#e5e5e5',
+                  }}>
+                    {log.message}
+                  </span>
+                </div>
+              ))
+            )}
+            <div ref={logEndRef} />
+          </div>
+        ) : (
+          <div className="sf-feed" style={{ maxHeight: 260, overflowY: 'auto' }}>
+            {logs.length === 0 ? (
+              <div className="sf-empty">No activity yet. Run a scraper to see results.</div>
+            ) : (
+              [...logs].reverse().map((log, i) => {
+                const idx = logs.length - 1 - i
+                const isError = log.type === 'error'
+                const isExpanded = expandedErrors.has(idx)
                 return (
                   <tr key={ev._id}>
                     <td>
