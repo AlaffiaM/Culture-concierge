@@ -267,6 +267,7 @@ export default function AdminSpots() {
                   <th>Type</th>
                   <th>Tags</th>
                   <th>Source</th>
+                  <th>Last Updated</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
