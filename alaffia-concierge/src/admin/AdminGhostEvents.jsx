@@ -160,12 +160,6 @@ export default function AdminGhostEvents() {
                     <td>{event.linkedSpotId?.name || 'Pop-up'}</td>
                     <td onClick={e => e.stopPropagation()}>
                       <div className="actions">
-                        {event.status === 'draft' && (
-                          <button className="admin-btn-sm admin-btn-approve" onClick={() => handleApprove(event._id)}>Approve</button>
-                        )}
-                        {event.status !== 'archived' && (
-                          <button className="admin-btn-sm admin-btn-archive" onClick={() => handleArchive(event._id)}>Archive</button>
-                        )}
                         <button className="admin-btn-sm admin-btn-edit" onClick={() => handleEdit(event)}>Edit</button>
                         <button className="admin-btn-sm admin-btn-delete" onClick={() => handleDelete(event._id)}>Delete</button>
                       </div>
