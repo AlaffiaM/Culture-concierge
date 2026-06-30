@@ -355,6 +355,49 @@ export default function AdminScraper() {
                 </div>
               )}
             </div>
+          )
+        })}
+      </div>
+
+      {/* Status Feed */}
+      <div style={{ marginBottom: 24, border: '1px solid var(--admin-border)', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px',
+          background: 'var(--admin-card)',
+          borderBottom: '1px solid var(--admin-border)',
+        }}>
+          {!devMode && (
+            <>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--admin-text)' }}>Status Feed</span>
+              {lastRefresh && (
+                <span style={{ fontSize: 11, color: 'var(--admin-text-muted)', marginLeft: 4 }}>
+                  · Last refresh: {lastRefresh.toLocaleTimeString()}
+                </span>
+              )}
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <div style={{
+                    width: 7, height: 7, borderRadius: '50%',
+                    background: health.color,
+                    boxShadow: health.status === 'running' ? '0 0 6px rgba(240,180,41,0.5)' : 'none',
+                    animation: health.status === 'running' ? 'scraper-pulse-dot 1.2s ease-in-out infinite' : 'none',
+                  }} />
+                  <span style={{ fontSize: 11, color: health.color }}>
+                    {health.label}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
+          {devMode && (
+            <>
+              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--admin-text)' }}>Dev Logs</span>
+              {logs.length > 0 && (
+                <span style={{ fontSize: 11, color: 'var(--admin-text-muted)', marginLeft: 4 }}>
+                  ({logs.length} entries)
+                </span>
+              )}
+            </>
           )}
         </div>
 
