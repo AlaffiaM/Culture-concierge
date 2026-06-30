@@ -128,14 +128,6 @@ export default function AdminGhostEvents() {
                     style={{ cursor: 'pointer' }}
                     onClick={() => handleRowClick(event)}
                   >
-                    <td onClick={e => e.stopPropagation()}>
-                      <input
-                        type="checkbox"
-                        checked={selectedIds.has(event._id)}
-                        onChange={() => toggleSelect(event._id)}
-                        style={{ accentColor: '#B45F2D' }}
-                      />
-                    </td>
                     <td>
                       {event.imageUrl ? (
                         <a href={event.imageUrl} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
