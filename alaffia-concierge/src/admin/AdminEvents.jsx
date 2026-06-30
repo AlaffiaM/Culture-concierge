@@ -205,6 +205,8 @@ export default function AdminEvents() {
             </div>
           )}
 
+          <Pagination />
+
           <div className="admin-table-wrap">
             <table className="admin-table">
               <thead>
