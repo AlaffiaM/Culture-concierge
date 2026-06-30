@@ -545,45 +545,15 @@ export default function AdminScraper() {
         </div>
       )}
 
-      <div style={{ marginTop: 40, marginBottom: 12 }}>
-        <h3 className="admin-section-title">Venue Scraper</h3>
-      </div>
-      <AdminVenueScraper />
-
-      <div style={{ marginTop: 40, marginBottom: 12 }}>
-        <h3 className="admin-section-title">Travel Brief (Advisories)</h3>
-      </div>
-      <div className="admin-quick-actions">
-        <button
-          className={`admin-quick-action${refreshingAdvisories ? ' loading' : ''}`}
-          onClick={handleRefreshAdvisories}
-          disabled={refreshingAdvisories}
-        >
-          <div className="admin-quick-action-icon copper">
-            {refreshingAdvisories ? <div className="admin-spinner" /> : '🌍'}
-          </div>
-          <div className="admin-quick-action-body">
-            <h4>{refreshingAdvisories ? 'Refreshing...' : 'Refresh All Advisories'}</h4>
-            <p>Generate security &amp; health advisories via Gemini for all cities</p>
-          </div>
-        </button>
-      </div>
-      {advisoryResult && (
-        <div style={{ padding: '10px 14px', marginBottom: 16, borderRadius: 8, fontSize: 13, background: advisoryResult.error ? 'rgba(220,50,50,0.1)' : 'rgba(80,180,80,0.1)', color: advisoryResult.error ? '#dc3232' : '#2e7d32' }}>
-          {advisoryResult.error
-            ? `Error: ${advisoryResult.error}`
-            : `Updated ${advisoryResult.updated || 0} city advisory(ies).`}
-        </div>
-      )}
-
-      {showHistory && history && (
-        <div>
-          <div className="admin-section-header">
-            <h3 className="admin-section-title">Recent Imports</h3>
-            <button
-              className="admin-btn-sm admin-btn-edit"
-              onClick={() => setShowHistory(false)}
-            >
+      {/* Recent Imports */}
+      <div style={{ marginBottom: 28 }}>
+        <div className="admin-section-header">
+          <h3 className="admin-section-title">Recent Imports</h3>
+          <button className="admin-btn-sm admin-btn-edit" onClick={loadHistory}>
+            {showHistory ? 'Refresh' : 'View History'}
+          </button>
+          {showHistory && (
+            <button className="admin-btn-sm admin-btn-edit" onClick={() => setShowHistory(false)}>
               Hide
             </button>
           </div>
