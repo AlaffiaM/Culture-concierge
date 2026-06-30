@@ -41,6 +41,7 @@ export default function AdminSpots() {
   const [totalPages, setTotalPages] = useState(1)
   const [filterCity, setFilterCity] = useState('All')
   const [filterPillar, setFilterPillar] = useState('All')
+  const [search, setSearch] = useState('')
   const [showEditor, setShowEditor] = useState(false)
   const [editingSpot, setEditingSpot] = useState(null)
   const [selectedIds, setSelectedIds] = useState(new Set())
