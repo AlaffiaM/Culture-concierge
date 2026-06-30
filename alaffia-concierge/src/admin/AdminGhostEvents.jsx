@@ -110,14 +110,6 @@ export default function AdminGhostEvents() {
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th style={{ width: 32 }}>
-                    <input
-                      type="checkbox"
-                      checked={events.length > 0 && selectedIds.size === events.length}
-                      onChange={selectAll}
-                      style={{ accentColor: '#B45F2D' }}
-                    />
-                  </th>
                   <th style={{ width: 50 }}>Image</th>
                   <th>Name</th>
                   <th>Venue</th>
