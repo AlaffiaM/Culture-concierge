@@ -556,9 +556,10 @@ export default function AdminScraper() {
             <button className="admin-btn-sm admin-btn-edit" onClick={() => setShowHistory(false)}>
               Hide
             </button>
-          </div>
-
-          {history.length === 0 ? (
+          )}
+        </div>
+        {showHistory && history && (
+          history.length === 0 ? (
             <p className="admin-empty">No scraped events yet.</p>
           ) : (
             <div className="admin-activity-feed">
