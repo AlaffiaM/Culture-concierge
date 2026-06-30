@@ -522,20 +522,7 @@ export default function AdminScraper() {
                       )}
                     </td>
                     <td style={{ fontWeight: 600 }}>{ev.name}</td>
-                    <td
-                      style={{ color: 'var(--admin-text-muted)', fontSize: 12, cursor: ev.venue ? 'pointer' : 'default', maxWidth: 160 }}
-                      onClick={() => {
-                        if (!ev.venue) return
-                        setVenueExpanded(prev => {
-                          const next = new Set(prev)
-                          next.has(ev._id) ? next.delete(ev._id) : next.add(ev._id)
-                          return next
-                        })
-                      }}
-                      title={venueExpanded.has(ev._id) ? '' : ev.venue}
-                    >
-                      {venueExpanded.has(ev._id) ? ev.venue : (ev.venue || '—')}
-                    </td>
+                    <td style={{ color: 'var(--admin-text-muted)', fontSize: 12, maxWidth: 160 }}>{ev.venue || '—'}</td>
                     <td style={{ fontSize: 12 }}>{ev.price || '—'}</td>
                     <td>{ev.city}</td>
                     <td>{formatDate(ev.date)}</td>
