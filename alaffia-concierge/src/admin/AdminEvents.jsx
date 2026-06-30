@@ -92,25 +92,6 @@ export default function AdminEvents() {
     loadEvents()
   }
 
-  async function bulkArchive() {
-    if (!confirm(`Archive ${selectedIds.size} event(s)?`)) return
-    for (const id of selectedIds) {
-      await adminFetch(`/api/events/${id}/archive`, { method: 'PUT' }).catch(() => {})
-    }
-    setSelectedIds(new Set())
-    loadEvents()
-  }
-
-  async function handleApprove(id) {
-    await adminFetch(`/api/events/${id}/approve`, { method: 'PUT' })
-    loadEvents()
-  }
-
-  async function handleArchive(id) {
-    await adminFetch(`/api/events/${id}/archive`, { method: 'PUT' })
-    loadEvents()
-  }
-
   async function handleDelete(id) {
     if (!confirm('Delete this event?')) return
     await adminFetch(`/api/events/${id}`, { method: 'DELETE' })
