@@ -269,11 +269,10 @@ export default function AdminEvents() {
                     {hasPrice && <td style={{ fontSize: 12 }}>{formatPrice(event.price) || '—'}</td>}
                     <td>{event.city}</td>
                     <td>{formatDate(event.date)}</td>
-                    <td>
-                      <span className={`admin-status-badge admin-status-${event.status}`}>
-                        {event.status}
-                        {event.isGhostLocation && <span style={{ marginLeft: 4, fontSize: 10, opacity: 0.6 }}>👻</span>}
-                      </span>
+                    <td><PillarBadge pillar={event.pillar} /></td>
+                    <td><VibePill vibe={event.vibe} /></td>
+                    <td style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
+                      {event.linkedSpotId?.name || (event.isGhostLocation ? 'Pop-up' : '—')}
                     </td>
                     <td>{event.vibe || '—'}</td>
                     <td>{event.linkedSpotId?.name || (event.isGhostLocation ? 'Pop-up' : '—')}</td>
