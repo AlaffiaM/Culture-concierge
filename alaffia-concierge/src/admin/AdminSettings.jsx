@@ -305,8 +305,21 @@ export default function AdminSettings({ user }) {
             <strong>Clear all scraped events</strong>
             <p>This permanently deletes all events imported from external scrapers (Ticketsasa, KenyaBuzz, Mookh, Eventbrite). Manually created events will not be affected.</p>
           </div>
-          <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
-            alaffia-concierge
+          <div className="danger-action">
+            <input
+              type="text"
+              placeholder='Type "CLEAR" to confirm'
+              value={confirmDanger}
+              onChange={e => setConfirmDanger(e.target.value)}
+              className="danger-input"
+            />
+            <button
+              className="admin-btn danger-btn"
+              disabled={confirmDanger !== 'CLEAR' || clearing}
+              onClick={handleClearScraped}
+            >
+              {clearing ? 'Clearing...' : 'Clear Scraped Events'}
+            </button>
           </div>
         </div>
       </div>
