@@ -182,25 +182,178 @@ export default function AdminScraper() {
   function StatusDot({ state }) {
     const colors = { idle: '#444', running: '#f0b429', done: '#8A9A5B', error: '#dc3232' }
     return (
-      <div style={{ marginBottom: 28 }}>
-        <div className="admin-toolbar" style={{ marginBottom: 8 }}>
-          <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--admin-text)' }}>
-            {title} ({items.length})
-            {pendingCount > 0 && ` (${pendingCount} pending)`}
-          </span>
-          {pendingCount > 0 && (
-            <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-              <button className="admin-btn-sm admin-btn-approve" onClick={() => selectAll(items)}>
-                {selectedIds.size === items.length ? 'Deselect All' : 'Select All'}
-              </button>
-              <button
-                className="admin-btn admin-btn-primary"
-                onClick={() => handleAccept()}
-                disabled={selectedIds.size === 0 || accepting}
-                style={{ padding: '4px 14px', fontSize: 12 }}
-              >
-                {accepting ? 'Accepting...' : `Accept to Draft (${selectedIds.size})`}
-              </button>
+      <span style={{
+        display: 'inline-block',
+        width: 10,
+        height: 10,
+        borderRadius: '50%',
+        background: colors[state] || colors.idle,
+        boxShadow: state === 'running' ? `0 0 8px ${colors.running}` : 'none',
+        animation: state === 'running' ? 'scraper-pulse-dot 1.2s ease-in-out infinite' : 'none',
+        flexShrink: 0,
+      }} />
+    )
+  }
+
+  function ProgressBar({ state }) {
+    if (state === 'idle') return null
+    const isRunning = state === 'running'
+    const isError = state === 'error'
+    return (
+      <div style={{
+        width: '100%',
+        height: 4,
+        borderRadius: 2,
+        background: 'rgba(255,255,255,0.06)',
+        overflow: 'hidden',
+        marginTop: 8,
+      }}>
+        <div style={{
+          width: isRunning ? '60%' : '100%',
+          height: '100%',
+          borderRadius: 2,
+          background: isError ? '#dc3232' : '#8A9A5B',
+          animation: isRunning ? 'scraper-progress-indeterminate 1.5s ease-in-out infinite' : 'none',
+          transition: 'width 0.4s ease',
+        }} />
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      {/* Stats Header */}
+      <div className="admin-stats-grid" style={{ marginBottom: 24 }}>
+        <div className="admin-stat-card">
+          <div className="admin-stat-header">
+            <div className="admin-stat-icon copper">📥</div>
+          </div>
+          <div className="admin-stat-number">{totalFetched || '—'}</div>
+          <div className="admin-stat-label">Events Fetched</div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-header">
+            <div className="admin-stat-icon sage">✨</div>
+          </div>
+          <div className="admin-stat-number">{totalNew || '—'}</div>
+          <div className="admin-stat-label">New Imports</div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-header">
+            <div className="admin-stat-icon white">⏭</div>
+          </div>
+          <div className="admin-stat-number">{totalRejected || '—'}</div>
+          <div className="admin-stat-label">Rejected</div>
+        </div>
+        <div className="admin-stat-card" style={{ borderColor: health.status === 'error' ? 'rgba(220,50,50,0.3)' : health.status === 'running' ? 'rgba(240,180,41,0.3)' : undefined }}>
+          <div className="admin-stat-header">
+            <div style={{
+              width: 28, height: 28, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: health.status === 'error' ? 'rgba(220,50,50,0.15)' : health.status === 'running' ? 'rgba(240,180,41,0.15)' : 'rgba(138,154,91,0.15)',
+              color: health.color,
+              fontSize: 13,
+            }}>
+              <div style={{
+                width: 8, height: 8, borderRadius: '50%',
+                background: health.color,
+                boxShadow: health.status === 'running' ? '0 0 8px rgba(240,180,41,0.5)' : 'none',
+                animation: health.status === 'running' ? 'scraper-pulse-dot 1.2s ease-in-out infinite' : 'none',
+              }} />
+            </div>
+          </div>
+          <div className="admin-stat-number" style={{ color: health.color, fontSize: 20 }}>
+            {health.label}
+          </div>
+          <div className="admin-stat-label">System Health</div>
+        </div>
+      </div>
+
+      {/* Run All Button */}
+      <div style={{ marginBottom: 20 }}>
+        <button
+          className="admin-quick-action"
+          onClick={() => handleRun(null)}
+          disabled={anyRunning}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px',
+            border: '1px solid var(--admin-border)', borderRadius: 10,
+            background: anyRunning ? 'rgba(255,255,255,0.03)' : 'var(--admin-card)',
+            color: 'var(--admin-text)', cursor: anyRunning ? 'not-allowed' : 'pointer',
+            opacity: anyRunning ? 0.5 : 1, transition: 'all 0.2s',
+          }}
+        >
+          <div style={{
+            width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: anyRunning ? 'rgba(240,180,41,0.15)' : 'rgba(180,95,45,0.2)',
+            fontSize: 16,
+          }}>
+            {anyRunning ? <div className="admin-spinner" /> : '⚡'}
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontWeight: 600, fontSize: 13 }}>{anyRunning ? 'Scraping...' : 'Run All Sources'}</div>
+            <div style={{ fontSize: 11, color: 'var(--admin-text-muted)' }}>{anyRunning ? 'Processing...' : 'Import events from all sources'}</div>
+          </div>
+        </button>
+      </div>
+
+      {/* Source Cards */}
+      <div className="admin-stats-grid scraper-cards" style={{ marginBottom: 24 }}>
+        {SOURCES.map(src => {
+          const status = getStatus(src)
+          return (
+            <div
+              key={src}
+              className="admin-stat-card scraper-source-card"
+              style={{
+                borderColor: status.state === 'running' ? 'rgba(240,180,41,0.3)' : status.state === 'done' ? 'rgba(138,154,91,0.3)' : status.state === 'error' ? 'rgba(220,50,50,0.3)' : undefined,
+                transition: 'all 0.3s ease',
+              }}
+            >
+              <div className="admin-stat-header">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
+                  <StatusDot state={status.state} />
+                  <span style={{ fontWeight: 600, fontSize: 13 }}>{SOURCE_LABELS[src]}</span>
+                  <button
+                    onClick={() => handleRun(src)}
+                    disabled={status.state === 'running'}
+                    style={{
+                      marginLeft: 'auto', padding: '4px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.1)',
+                      background: status.state === 'running' ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.06)',
+                      color: 'var(--admin-text)', fontSize: 11, cursor: status.state === 'running' ? 'not-allowed' : 'pointer',
+                      opacity: status.state === 'running' ? 0.4 : 1, transition: 'all 0.2s',
+                      display: 'flex', alignItems: 'center', gap: 4,
+                    }}
+                  >
+                    {status.state === 'running' ? (
+                      <div className="admin-spinner" style={{ width: 12, height: 12 }} />
+                    ) : (
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M3 1.5v9l7-4.5L3 1.5z" fill="currentColor" />
+                      </svg>
+                    )}
+                    {status.state === 'running' ? '...' : 'Run'}
+                  </button>
+                </div>
+              </div>
+
+              <ProgressBar state={status.state} />
+
+              {status.state !== 'idle' && (
+                <div style={{ marginTop: 10, fontSize: 12, color: 'var(--admin-text-muted)' }}>
+                  {status.state === 'running' && <span>Fetching events...</span>}
+                  {status.state === 'done' && (
+                    <span>
+                      <span style={{ color: '#8A9A5B', fontWeight: 600 }}>{status.count} new</span>
+                      {status.fetched !== undefined && <span style={{ marginLeft: 8 }}>{status.fetched} found</span>}
+                      {status.skipped > 0 && <span style={{ marginLeft: 8, opacity: 0.6 }}>{status.skipped} dupes</span>}
+                      {status.rejected > 0 && <span style={{ marginLeft: 8, opacity: 0.6 }}>{status.rejected} filtered</span>}
+                    </span>
+                  )}
+                  {status.state === 'error' && (
+                    <span style={{ color: '#dc3232' }}>{status.error || 'Failed'}</span>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
