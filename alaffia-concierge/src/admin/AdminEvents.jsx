@@ -82,8 +82,9 @@ export default function AdminEvents() {
     })
   }
 
-  async function bulkApprove() {
-    if (!confirm(`Approve ${selectedIds.size} event(s)?`)) return
+  async function bulkDelete() {
+    if (selectedIds.size === 0) return
+    if (!confirm(`Delete ${selectedIds.size} event(s)? This cannot be undone.`)) return
     for (const id of selectedIds) {
       await adminFetch(`/api/events/${id}/approve`, { method: 'PUT' }).catch(() => {})
     }
