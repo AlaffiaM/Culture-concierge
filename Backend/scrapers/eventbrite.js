@@ -54,6 +54,8 @@ async function scrape() {
           } catch (_) {}
         }
 
+        const price = item.offers?.price?.toString() || ''
+
         events.push({
           name: item.name,
           city: addressCity,
@@ -63,6 +65,7 @@ async function scrape() {
           pillar: classifyPillar(item.name, item.description),
           type: '',
           venue: location,
+          price,
           source: SOURCE,
           url: item.url || '',
           time,
