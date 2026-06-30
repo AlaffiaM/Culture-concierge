@@ -144,10 +144,30 @@ export default function AdminOverview({ onNavigate }) {
         </button>
       </div>
 
-      {stats.spotsByCity?.length > 0 && (
-        <div style={{ marginBottom: 28 }}>
-          <div className="admin-section-header">
-            <h3 className="admin-section-title">Spots by City</h3>
+      {/* City Distribution */}
+      {allCities.length > 0 && (
+        <div className="admin-dashboard-two-col" style={{ marginBottom: 28 }}>
+          <div>
+            <div className="admin-section-header">
+              <h3 className="admin-section-title">City Distribution</h3>
+            </div>
+            <div className="city-chart">
+              {allCities.map((c, i) => (
+                <div key={c.city} className="city-chart-row clickable" onClick={() => onNavigate('events')}>
+                  <span className="city-chart-label">{c.city}</span>
+                  <div className="city-chart-track">
+                    <div
+                      className="city-chart-fill"
+                      style={{
+                        width: `${Math.max((c.count / cityMax) * 100, 4)}%`,
+                        background: CITY_COLORS[i % CITY_COLORS.length],
+                      }}
+                    />
+                  </div>
+                  <span className="city-chart-value">{c.count}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="admin-city-list">
             {stats.spotsByCity.map(c => (
