@@ -116,12 +116,10 @@ export default function AdminSettings({ user }) {
         <div className="admin-stat-card">
           <div className="admin-stat-header">
             <div className="admin-stat-icon white">👤</div>
-          </div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
-            {user?.displayName || 'Admin'}
-          </div>
-          <div style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
-            {user?.email || 'Unknown'}
+            <div>
+              <div className="admin-stat-number" style={{ fontSize: 18 }}>{user?.displayName || 'Admin'}</div>
+              <div className="admin-stat-label">{user?.email || 'Unknown'}</div>
+            </div>
           </div>
         </div>
 
