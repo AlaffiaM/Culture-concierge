@@ -199,8 +199,8 @@ export default function AdminEvents() {
               <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
                 {selectedIds.size} selected
               </span>
-              <button className="admin-btn-sm admin-btn-approve" onClick={bulkApprove}>
-                Approve All
+              <button className="admin-btn-sm admin-btn-delete" onClick={bulkDelete}>
+                Delete Selected
               </button>
               <button className="admin-btn-sm admin-btn-archive" onClick={bulkArchive}>
                 Archive All
