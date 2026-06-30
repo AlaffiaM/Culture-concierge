@@ -39,56 +39,6 @@ export default function AdminGhostEvents() {
 
   useEffect(() => { loadEvents() }, [filterStatus, filterCity])
 
-  function selectAll() {
-    if (selectedIds.size === events.length) {
-      setSelectedIds(new Set())
-    } else {
-      setSelectedIds(new Set(events.map(e => e._id)))
-    }
-  }
-
-  function toggleSelect(id) {
-    setSelectedIds(prev => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
-
-  async function bulkApprove() {
-    if (!confirm(`Approve ${selectedIds.size} ghost event(s)?`)) return
-    for (const id of selectedIds) {
-      await adminFetch(`/api/events/${id}/approve`, { method: 'PUT' }).catch(() => {})
-    }
-    setSelectedIds(new Set())
-    loadEvents()
-  }
-
-  async function bulkArchive() {
-    if (!confirm(`Archive ${selectedIds.size} ghost event(s)?`)) return
-    for (const id of selectedIds) {
-      await adminFetch(`/api/events/${id}/archive`, { method: 'PUT' }).catch(() => {})
-    }
-    setSelectedIds(new Set())
-    loadEvents()
-  }
-
-  async function handleApprove(id) {
-    await adminFetch(`/api/events/${id}/approve`, { method: 'PUT' })
-    if (detailEvent?._id === id) {
-      setDetailEvent(prev => ({ ...prev, status: 'approved' }))
-    }
-    loadEvents()
-  }
-
-  async function handleArchive(id) {
-    await adminFetch(`/api/events/${id}/archive`, { method: 'PUT' })
-    if (detailEvent?._id === id) {
-      setDetailEvent(prev => ({ ...prev, status: 'archived' }))
-    }
-    loadEvents()
-  }
-
   async function handleDelete(id) {
     if (!confirm('Delete this ghost event?')) return
     await adminFetch(`/api/events/${id}`, { method: 'DELETE' })
