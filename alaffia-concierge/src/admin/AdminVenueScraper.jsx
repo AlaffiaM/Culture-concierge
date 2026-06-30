@@ -37,7 +37,7 @@ export default function AdminVenueScraper() {
     setLoadingExisting(true)
     try {
       const all = await adminFetch('/api/spots?all=true')
-      setExistingSpots(all.filter(s => ['gemini'].includes(s.source) && s.status === 'scraped'))
+      setExistingSpots((all.spots || all).filter(s => ['gemini'].includes(s.source) && s.status === 'scraped'))
       setScraperSelected(new Set())
     } catch (err) {
       console.error('[AdminVenueScraper] Load existing failed:', err.message)
