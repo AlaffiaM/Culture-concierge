@@ -122,7 +122,6 @@ export default function AdminSettings({ user }) {
             </div>
           </div>
         </div>
-
         <div className="admin-stat-card">
           <div className="admin-stat-header">
             <div className="admin-stat-icon sage">🔑</div>
