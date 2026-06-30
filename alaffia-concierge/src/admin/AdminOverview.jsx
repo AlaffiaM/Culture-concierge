@@ -2,13 +2,23 @@ import { useState, useEffect } from 'react'
 import { adminFetch } from './adminApi'
 
 const STAT_ICONS = {
-  totalEvents: { icon: '📅', color: 'white' },
-  draftEvents: { icon: '⏳', color: 'copper' },
-  approvedEvents: { icon: '✅', color: 'sage' },
-  archivedEvents: { icon: '📦', color: 'white' },
-  totalSpots: { icon: '📍', color: 'copper' },
-  ghostEvents: { icon: '👻', color: 'white' },
-  eventsThisWeek: { icon: '🔥', color: 'copper' },
+  totalEvents: { icon: '📅', color: 'white', nav: 'events' },
+  totalSpots: { icon: '📍', color: 'copper', nav: 'spots' },
+  ghostEvents: { icon: '📝', color: 'white', nav: 'ghosts' },
+  eventsThisWeek: { icon: '🔥', color: 'copper', nav: 'events' },
+}
+
+const PILLAR_STYLES = {
+  WELLNESS: { bg: 'rgba(138,154,91,0.15)', text: '#8A9A5B', label: 'Wellness' },
+  CULTURE: { bg: 'rgba(180,95,45,0.15)', text: '#B45F2D', label: 'Culture' },
+  SOCIAL: { bg: 'rgba(91,138,154,0.15)', text: '#5B8A9A', label: 'Social' },
+}
+
+const CITY_COLORS = ['#B45F2D', '#8A9A5B', '#5B8A9A', '#9A5B8A', '#B48A5B', '#5B9A8A']
+
+function formatDate(d) {
+  if (!d) return ''
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
 export default function AdminOverview({ onNavigate }) {
