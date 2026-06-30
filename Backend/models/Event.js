@@ -18,7 +18,9 @@ const eventSchema = new mongoose.Schema({
   description: String,
   tip: String,
   imageUrl: String,
-  status: { type: String, enum: ['scraped', 'draft', 'approved', 'archived'], default: 'draft' },
+  venue: String,
+  price: String,
+  status: { type: String, enum: ['draft', 'approved'], default: 'draft' },
   isGhostLocation: { type: Boolean, default: false },
   source: { type: String, default: 'manual' },
 }, { timestamps: true })
