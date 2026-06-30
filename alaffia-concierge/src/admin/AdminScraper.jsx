@@ -570,6 +570,7 @@ export default function AdminScraper() {
                   <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>
                     {SOURCE_LABELS[ev.source] || ev.source}
                   </span>
+                  <span style={{ fontSize: 12, color: 'var(--admin-text-muted)' }}>{ev.city}</span>
                   <span>{formatDate(ev.date)}</span>
                 </div>
               ))}
