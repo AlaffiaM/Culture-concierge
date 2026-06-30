@@ -44,10 +44,7 @@ export default function AdminEvents() {
 
     adminFetch(`/api/events?${params}`)
       .then(data => {
-        let filtered = data
-        if (filterCity !== 'All') {
-          filtered = filtered.filter(e => e.city?.toLowerCase() === filterCity.toLowerCase())
-        }
+        let filtered = data.events || []
         if (search) {
           const q = search.toLowerCase()
           filtered = filtered.filter(e =>
