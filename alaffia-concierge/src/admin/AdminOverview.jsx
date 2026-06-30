@@ -202,6 +202,7 @@ export default function AdminOverview({ onNavigate }) {
         </div>
       )}
 
+      {/* Recent Events */}
       {recentEvents.length > 0 && (
         <div>
           <div className="admin-section-header">
