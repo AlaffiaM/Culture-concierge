@@ -118,7 +118,7 @@ function App() {
       } catch {}
     }
 
-    fetch(API_BASE + "/api/spots?all=true")
+    fetch(API_BASE + "/api/spots")
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         return res.json()
