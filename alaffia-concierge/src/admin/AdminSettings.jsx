@@ -54,7 +54,7 @@ export default function AdminSettings({ user }) {
   const [team, setTeam] = useState([])
   const [vibeTags, setVibeTags] = useState([])
   const [newVibe, setNewVibe] = useState('')
-  const [activeCities, setActiveCities] = useState(ALL_CITIES)
+  const [activeCities, setActiveCities] = useState(loadCities)
   const [loading, setLoading] = useState(true)
   const [clearing, setClearing] = useState(false)
   const [clearResult, setClearResult] = useState(null)
