@@ -21,6 +21,20 @@ function loadCities() {
       if (Array.isArray(parsed) && parsed.length > 0) return parsed
     }
   } catch {}
+  return ALL_CITIES
+}
+
+function loadVibes() {
+  try {
+    const saved = localStorage.getItem(VIBES_KEY)
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed
+    }
+  } catch {}
+  return null
+}
+
 function formatUptime(seconds) {
   const d = Math.floor(seconds / 86400)
   const h = Math.floor((seconds % 86400) / 3600)
