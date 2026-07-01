@@ -18,6 +18,7 @@ function loadCities() {
     const saved = localStorage.getItem(CITIES_KEY)
     if (saved) {
       const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed
 function formatUptime(seconds) {
   const d = Math.floor(seconds / 86400)
   const h = Math.floor((seconds % 86400) / 3600)
