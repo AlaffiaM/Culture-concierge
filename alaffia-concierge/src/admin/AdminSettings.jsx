@@ -228,9 +228,7 @@ export default function AdminSettings({ user }) {
             </div>
             <div className="health-card-row">
               <span className="health-label">Firebase</span>
-              <span className="health-value" style={{ color: HEALTHY_COLOR }}>
-                ● Configured
-              </span>
+              <span className="health-value health-dot connected">● Configured</span>
             </div>
             <div className="health-card-row">
               <span className="health-label">Node Version</span>
