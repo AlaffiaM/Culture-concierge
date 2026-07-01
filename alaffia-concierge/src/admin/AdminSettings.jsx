@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { adminFetch } from './adminApi'
 
 const ALL_CITIES = ['Lagos', 'Abuja', 'Kigali', 'Nairobi']
+const CITIES_KEY = 'alaffia_active_cities'
 
 const PRESET_VIBES = [
   '#SocialCreative', '#QuietIntellectual', '#ActiveWellness', '#HighCulture',
