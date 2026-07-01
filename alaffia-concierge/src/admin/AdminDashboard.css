@@ -1608,6 +1608,7 @@
   color: var(--admin-text);
 }
 
+.health-dot.connected {
 /* ===== City Toggles ===== */
 
 .city-toggles {
