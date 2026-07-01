@@ -14,6 +14,7 @@ const PRESET_VIBES = [
 const API_BASE = import.meta.env.VITE_API_URL || '(local proxy)'
 
 function loadCities() {
+  try {
 function formatUptime(seconds) {
   const d = Math.floor(seconds / 86400)
   const h = Math.floor((seconds % 86400) / 3600)
