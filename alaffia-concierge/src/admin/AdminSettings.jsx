@@ -244,7 +244,7 @@ export default function AdminSettings({ user }) {
       {/* Cities */}
       <div className="settings-section">
         <h3 className="admin-section-title">Active Cities</h3>
-        <p className="settings-note">Toggle which cities are active in the system.</p>
+        <p className="settings-note">Toggle which cities are shown. This setting is saved locally.</p>
         <div className="city-toggles">
           {ALL_CITIES.map(city => (
             <label key={city} className="city-toggle">
