@@ -68,7 +68,8 @@ export default function AdminSettings({ user }) {
     ]).then(([h, t, v]) => {
       setHealth(h)
       setTeam(t)
-      setVibeTags(v)
+      const localVibes = loadVibes()
+      setVibeTags(localVibes || v)
     }).catch(err => console.error('[AdminSettings]', err.message))
       .finally(() => setLoading(false))
   }, [])
