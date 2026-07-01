@@ -15,6 +15,7 @@ const API_BASE = import.meta.env.VITE_API_URL || '(local proxy)'
 
 function loadCities() {
   try {
+    const saved = localStorage.getItem(CITIES_KEY)
 function formatUptime(seconds) {
   const d = Math.floor(seconds / 86400)
   const h = Math.floor((seconds % 86400) / 3600)
