@@ -74,6 +74,14 @@ export default function AdminSettings({ user }) {
       .finally(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    localStorage.setItem(CITIES_KEY, JSON.stringify(activeCities))
+  }, [activeCities])
+
+  useEffect(() => {
+    localStorage.setItem(VIBES_KEY, JSON.stringify(vibeTags))
+  }, [vibeTags])
+
   function toggleCity(city) {
     setActiveCities(prev =>
       prev.includes(city) ? prev.filter(c => c !== city) : [...prev, city]
