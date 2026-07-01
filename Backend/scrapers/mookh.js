@@ -3,6 +3,15 @@ const { execSync } = require('child_process')
 
 const SOURCE = 'mookh'
 
+function ensureChrome() {
+  try {
+    puppeteer.executablePath()
+  } catch {
+    console.log('[mookh] Chrome not found — installing...')
+    execSync('npx @puppeteer/browsers install chrome', { stdio: 'inherit', cwd: __dirname })
+  }
+}
+
 const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 }
 
 function classifyPillar(name, desc) {
