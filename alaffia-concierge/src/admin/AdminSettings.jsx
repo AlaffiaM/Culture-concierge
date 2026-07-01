@@ -187,7 +187,7 @@ export default function AdminSettings({ user }) {
           <div className="health-card">
             <div className="health-card-row">
               <span className="health-label">Database</span>
-              <span className="health-value" style={{ color: health?.database === 'connected' ? HEALTHY_COLOR : health?.database === 'connecting' ? WARN_COLOR : BAD_COLOR }}>
+              <span className={`health-value health-dot ${health?.database === 'connected' ? 'connected' : health?.database === 'connecting' ? 'warn' : 'bad'}`}>
                 {health?.database === 'connected' ? '● Connected' : health?.database === 'connecting' ? '● Connecting' : '○ Disconnected'}
               </span>
             </div>
