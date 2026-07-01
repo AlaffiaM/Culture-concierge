@@ -1,14 +1,14 @@
 const puppeteer = require('puppeteer')
-const { execSync } = require('child_process')
+const { install } = require('@puppeteer/browsers')
 
 const SOURCE = 'mookh'
 
-function ensureChrome() {
+async function ensureChrome() {
   try {
     puppeteer.executablePath()
   } catch {
     console.log('[mookh] Chrome not found — installing...')
-    execSync('npx @puppeteer/browsers install chrome', { stdio: 'inherit', cwd: __dirname })
+    await install({ browser: 'chrome', buildId: 'latest', cacheDir: '/opt/render/.cache/puppeteer' })
   }
 }
 
@@ -72,7 +72,7 @@ function extractCity(text) {
 }
 
 async function scrape() {
-  ensureChrome()
+  await ensureChrome()
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
