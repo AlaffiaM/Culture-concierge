@@ -133,13 +133,27 @@ export default function AdminSettings({ user }) {
     }
   }
 
-  const HEALTHY_COLOR = '#8A9A5B'
-  const WARN_COLOR = '#f0b429'
-  const BAD_COLOR = '#dc3232'
-  const IDLE_COLOR = '#666'
-
-  function envVal(key) {
-    return import.meta.env[key] || 'Not set'
+  if (loading) {
+    return (
+      <div className="settings-page">
+        <div className="settings-grid">
+          {[1, 2].map(i => (
+            <div key={i} className="admin-stat-card" style={{ padding: '28px 20px' }}>
+              <div className="skeleton skeleton-md" style={{ width: '60%', marginBottom: 8 }} />
+              <div className="skeleton skeleton-sm" style={{ width: '40%' }} />
+            </div>
+          ))}
+        </div>
+        <div className="settings-section">
+          <div className="skeleton skeleton-md" style={{ width: '30%', marginBottom: 12 }} />
+          <div className="health-card">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="skeleton skeleton-sm" style={{ width: '80%', margin: '8px 0' }} />
+            ))}
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
