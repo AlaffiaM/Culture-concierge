@@ -197,7 +197,7 @@ export default function AdminSettings({ user }) {
             </div>
             <div className="health-card-row">
               <span className="health-label">Gemini API</span>
-              <span className="health-value" style={{ color: health?.geminiKeyConfigured ? HEALTHY_COLOR : BAD_COLOR }}>
+              <span className={`health-value health-dot ${health?.geminiKeyConfigured ? 'connected' : 'bad'}`}>
                 {health?.geminiKeyConfigured ? '● Configured' : '○ Not configured'}
               </span>
             </div>
