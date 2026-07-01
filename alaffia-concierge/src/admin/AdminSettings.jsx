@@ -262,7 +262,7 @@ export default function AdminSettings({ user }) {
       {/* Categories & Vibe Tags */}
       <div className="settings-section">
         <h3 className="admin-section-title">Categories &amp; Vibe Tags</h3>
-        <p className="settings-note">Manage vibe tags used across events and spots.</p>
+        <p className="settings-note">Manage vibe tags used across events and spots. Changes are saved locally.</p>
         <div className="vibe-tags-area">
           {vibeTags.map(tag => (
             <span key={tag} className="vibe-tag">
