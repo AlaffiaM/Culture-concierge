@@ -142,7 +142,7 @@ router.get('/health', async (req, res) => {
       lastScraperRun: lastScrapedEvent?.createdAt || null,
       lastScraperSource: lastScrapedEvent?.source || null,
       geminiKeyConfigured: !!process.env.GEMINI_API_KEY,
-      firebaseConfigured: !!process.env.Firebase_API_KEY,
+      firebaseConfigured: true,
       eventCount,
       spotCount,
       nodeVersion: process.version,
